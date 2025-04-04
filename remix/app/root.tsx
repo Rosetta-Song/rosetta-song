@@ -61,13 +61,15 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap" rel="stylesheet"></link>
         <Meta />
         <Links />
       </head>
       <body>
+      
         <div id="sidebar">
-       
-          <h1>osseta Song</h1>
+          
+          <h1><img  src="logo.png" alt="Rosseta Song" width="65" height="65"></img> Rosseta Song</h1>
           <div>
             <Form id="search-form"  onChange={(event) => {
                 const isFirstSearch = q === null;
