@@ -33,4 +33,7 @@ def search_video_by_id():
         return jsonify({"error": f"An HTTP error {e.resp.status} occurred: {e.content}"}), 500
 
 if __name__ == "__main__":
+    with app.test_request_context('/search_video_by_id?video_id=e5Pit2WJ6dI'):
+        response = search_video_by_id()
+        print(response.get_json())
     app.run(port=8083)
