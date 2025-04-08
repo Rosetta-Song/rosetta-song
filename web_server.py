@@ -27,29 +27,77 @@ def get_youtube_service():
     from google_auth_oauthlib.flow import InstalledAppFlow
     from google.auth.transport.requests import Request
     import os
+    #
+    # SCOPES = ['https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtube.captions.readonly']
+    # CREDENTIALS_PATH = 'client_secret.json'  # Replace with your path
+    # TOKEN_PATH = 'token.json'
+    #
+    # creds = None
+    # if os.path.exists(TOKEN_PATH):
+    #     creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
+    # if not creds or not creds.valid:
+    #     if creds and creds.expired and creds.refresh_token:
+    #         creds.refresh(Request())
+    #     else:
+    #         flow = InstalledAppFlow.from_client_secrets_file(
+    #             CREDENTIALS_PATH, SCOPES)
+    #         auth_url, _ = flow.authorization_url()  # Get the authorization URL
+    #         print(f"Authorization URL: {auth_url}")  # Print it
+    #         creds = flow.run_local_server(port=0)
+    #     with open(TOKEN_PATH, 'w') as token:
+    #         token.write(creds.to_json())
+    # return build('youtube', 'v3', credentials=creds)
+    # For now, we'll return a build with the API key, but this will likely fail.
+    DEVELOPER_KEY = 'AIzaSyAZDgbg5jjsDGlxR6Bu1ftmvKZ6jkYLdJI' # REMOVE OR REPLACE WITH OAUTH 2.0
+    YOUTUBE_API_SERVICE_NAME = 'youtube'
+    YOUTUBE_API_VERSION = 'v3'
+    return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
 
-    SCOPES = ['https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtube.captions.readonly']
-    CREDENTIALS_PATH = 'client_secret_428369234594-8qevo1u56brnmub09srn24ptp1kro36u.apps.googleusercontent.com.json' # Replace with your path
-    TOKEN_PATH = 'token.json'
 
-    creds = None
-    if os.path.exists(TOKEN_PATH):
-        creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                CREDENTIALS_PATH, SCOPES)
-            creds = flow.run_local_server(port=0)
-        with open(TOKEN_PATH, 'w') as token:
-            token.write(creds.to_json())
-    return build('youtube', 'v3', credentials=creds)
-    # # For now, we'll return a build with the API key, but this will likely fail.
-    # DEVELOPER_KEY = 'AIzaSyAZDgbg5jjsDGlxR6Bu1ftmvKZ6jkYLdJI' # REMOVE OR REPLACE WITH OAUTH 2.0
-    # YOUTUBE_API_SERVICE_NAME = 'youtube'
-    # YOUTUBE_API_VERSION = 'v3'
-    # return build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
+@app.route("/search_by_keyword", methods=["GET"])
+def search_by_keyword():
+    keyword = request.args.get("keyword")
+    if not keyword:
+        return jsonify({"error": "keyword parameter is required"}), 400
+
+    youtube = get_youtube_service()
+    try:
+        search_response = youtube.search().list(
+            part="id,snippet",
+            q=keyword,
+            type="video,channel,playlist",
+            maxResults=10
+        ).execute()
+
+        if "items" not in search_response or not search_response["items"]:
+            return jsonify({"error": "No results found for the provided keyword"}), 404
+
+        results = []
+        for item in search_response["items"]:
+            result = {
+                "kind": item.get("kind"),
+                "etag": item.get("etag"),
+                "id": {
+                    "kind": item["id"].get("kind"),
+                    "videoId": item["id"].get("videoId"),
+                    "channelId": item["id"].get("channelId"),
+                    "playlistId": item["id"].get("playlistId")
+                },
+                "snippet": {
+                    "publishedAt": item["snippet"].get("publishedAt"),
+                    "channelId": item["snippet"].get("channelId"),
+                    "title": item["snippet"].get("title"),
+                    "description": item["snippet"].get("description"),
+                    "thumbnails": item["snippet"].get("thumbnails"),
+                    "channelTitle": item["snippet"].get("channelTitle"),
+                    "liveBroadcastContent": item["snippet"].get("liveBroadcastContent")
+                }
+            }
+            results.append(result)
+
+        return jsonify(results)
+    except HttpError as e:
+        return jsonify({"error": f"An HTTP error {e.resp.status} occurred: {e.content}"}), 500
 
 
 @app.route("/search_video_by_id", methods=["GET"])
@@ -125,10 +173,10 @@ if __name__ == "__main__":
         else:
             print(json.dumps(response.get_json(), indent=4))
     print("----------------")
-    with app.test_request_context('/get_captions_by_video_id?video_id=e5Pit2WJ6dI&language=en'):
-        response = get_captions_by_video_id()
-        if isinstance(response, tuple):
-            print(json.dumps(response[0].get_json(), indent=4))
-        else:
-            print(json.dumps(response.get_json(), indent=4))
+    # with app.test_request_context('/get_captions_by_video_id?video_id=e5Pit2WJ6dI&language=en'):
+    #     response = get_captions_by_video_id()
+    #     if isinstance(response, tuple):
+    #         print(json.dumps(response[0].get_json(), indent=4))
+    #     else:
+    #         print(json.dumps(response.get_json(), indent=4))
     app.run(port=8083)
