@@ -124,7 +124,7 @@ export default function App() {
   );
 }
 
-import appStylesHref from "./app.css?url";
+import appStylesHref from "./styles/app.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },

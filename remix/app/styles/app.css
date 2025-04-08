@@ -110,6 +110,48 @@ body {
   flex-direction: column;
 }
 
+
+#index {
+  width: 100%;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
+  display: flex;
+  height: 204px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+
+#index > div form {
+  position: relative;
+}
+
+#index > div form input[type="search"] {
+  box-sizing: border-box;
+  width: 330%;
+  padding-left: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0.625rem 0.75rem;
+  background-size: 1rem;
+  position: relative;
+  margin-left: 20px;
+}
+
+#index > div form input[type="search"].loading {
+  background-image: none;
+}
+
+#index-spinner {
+  width: 1rem;
+  height: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%23000' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='M20 4v5h-.582m0 0a8.001 8.001 0 00-15.356 2m15.356-2H15M4 20v-5h.581m0 0a8.003 8.003 0 0015.357-2M4.581 15H9' /%3E%3C/svg%3E");
+  animation: spin 1s infinite linear;
+  position: absolute;
+  left: 0.625rem;
+  top: 0.75rem;
+}
+
 #sidebar > * {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -404,8 +446,14 @@ i {
 }
 
 #logo-side-dark{
-   width: 104px; /* Set the width */
-  height: 104px;
+  background-image: url("/app/logo-side-dark.png");
+  width: 204px; /* Set the width */
+  height: 204px;
+  align-content: center;
+   /* Set the background image */
+   background-size: cover; /* Ensure the image covers the entire container */
+   background-position: center; /* Center the image */
+   background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
 
@@ -422,10 +470,11 @@ i {
 #logo-image {
   width: 65px; /* Set the width */
   height: 65px; /* Set the height */
-  background-image: url("logo.png"); /* Set the background image */
+  background-image: url("/app/logo.png"); /* Set the background image */
   background-size: cover; /* Ensure the image covers the entire container */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
   display: inline-block; /* Ensure it behaves like an inline element */
 }
-/* Set the height */
+
+
