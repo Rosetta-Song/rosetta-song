@@ -479,4 +479,9 @@ i {
   display: inline-block; /* Ensure it behaves like an inline element */
 }
 
+#results {
+  position: absolute;
+  padding-top: 35px;
+}
+
 
