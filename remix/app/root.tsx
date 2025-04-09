@@ -1,42 +1,55 @@
-import { useEffect, useState } from "react";
-
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import { json } from "@remix-run/node";
-
-import { getVideos } from "./data_videos";
-
+import { redirect } from "@remix-run/node";
 import {
   Form,
   Links,
+  LiveReload,
   Meta,
   NavLink,
   Outlet,
   Scripts,
   ScrollRestoration,
+  json,
   useLoaderData,
   useNavigation,
   useSubmit,
 } from "@remix-run/react";
 
+import appStylesHref from "./styles/app.css";
+
+import { createEmptyContact, getContacts } from "./data";
+import { useEffect } from "react";
+
+export const action = async () => {
+  const contact = await createEmptyContact();
+  return redirect(`/contacts/${contact.id}/edit`);
+};
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const videos = await getVideos(q);
-  return json({ videos, q });
+  const contacts = await getContacts(q);
+  return json({ contacts, q });
 };
 
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: appStylesHref },
+];
+
 export default function App() {
-  const { videos, q } = useLoaderData<typeof loader>();
+  const { contacts, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
+
   const searching =
     navigation.location &&
     new URLSearchParams(navigation.location.search).has("q");
 
-  const [query, setQuery] = useState(q ?? "");
-
   useEffect(() => {
-    setQuery(q ?? "");
+    const searchField = document.getElementById("q");
+    if (searchField instanceof HTMLInputElement) {
+      searchField.value = q || "";
+    }
   }, [q]);
 
   return (
@@ -44,10 +57,6 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap"
-          rel="stylesheet"
-        ></link>
         <Meta />
         <Links />
       </head>
@@ -61,53 +70,64 @@ export default function App() {
             Rosseta Song
           </h1>
           </NavLink>
+      
           <div>
             <Form
               id="search-form"
+              role="search"
               onChange={(event) => {
                 const isFirstSearch = q === null;
                 submit(event.currentTarget, {
                   replace: !isFirstSearch,
                 });
               }}
-              role="search"
             >
               <input
                 id="q"
-                aria-label="Search videos"
+                aria-label="Search contacts"
                 className={searching ? "loading" : ""}
-                onChange={(event) => setQuery(event.currentTarget.value)}
+                defaultValue={q || ""}
                 placeholder="Search"
                 type="search"
                 name="q"
-                value={query}
               />
-              <div aria-hidden hidden={!searching} id="search-spinner" />
+              <div id="search-spinner" aria-hidden hidden={!searching} />
+            </Form>
+            <Form method="post">
+              <button type="submit">New</button>
             </Form>
           </div>
           <nav>
-            {videos.length ? (
+            {contacts.length ? (
               <ul>
-                {videos.map((video) => (
-                  <li key={video.id.videoId}>
+                {contacts.map((contact) => (
+                  <li key={contact.id}>
                     <NavLink
                       className={({ isActive, isPending }) =>
                         isActive ? "active" : isPending ? "pending" : ""
                       }
-                      to={`videos/${video.id.videoId}`}
+                      to={`contacts/${contact.id}`}
                     >
-                      {video.snippet.title}
+                      {contact.first || contact.last ? (
+                        <>
+                          {contact.first} {contact.last}
+                        </>
+                      ) : (
+                        <i>No Name</i>
+                      )}{" "}
+                      {contact.favorite ? <span>★</span> : null}
                     </NavLink>
                   </li>
                 ))}
               </ul>
             ) : (
               <p>
-                <i>No videos found</i>
+                <i>No contacts</i>
               </p>
             )}
           </nav>
         </div>
+
         <div
           className={
             navigation.state === "loading" && !searching ? "loading" : ""
@@ -119,13 +139,8 @@ export default function App() {
 
         <ScrollRestoration />
         <Scripts />
+        <LiveReload />
       </body>
     </html>
   );
 }
-
-import appStylesHref from "./styles/app.css";
-
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: appStylesHref },
-];
