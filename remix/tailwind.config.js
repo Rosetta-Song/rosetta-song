@@ -1,10 +1,7 @@
 module.exports = {
-    content: [
-      "./app/**/*.{js,ts,jsx,tsx}",
-    ],
-    theme: {
-      extend: {},
-    },
-    plugins: [],
-  }
-  
+  content: ["./app/**/*.{js,jsx,ts,tsx}"], // Adjust the path to match your project structure
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+};
