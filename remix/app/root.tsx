@@ -86,7 +86,7 @@ export default function App() {
                   id="q"
                   aria-label="Search contacts"
                   className={searching ? "loading" : ""}
-                  defaultValue={q || ""}
+                  defaultValue={q ?? ""}
                   placeholder="Search"
                   type="search"
                   name="q"
@@ -136,7 +136,7 @@ export default function App() {
           >
             <Outlet />
         </div>
-
+      
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

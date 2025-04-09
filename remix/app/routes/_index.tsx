@@ -6,7 +6,6 @@ import {
   LiveReload,
   Meta,
   NavLink,
-  Outlet,
   Scripts,
   ScrollRestoration,
   json,
@@ -17,8 +16,8 @@ import {
 
 import appStylesHref from "../styles/app.css";
 
-import { createEmptyContact, getContacts } from "../data";
-import { useEffect } from "react";
+import { createEmptyContact, getSpotifyTracks } from "../data";
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
 
 export const action = async () => {
   const contact = await createEmptyContact();
@@ -28,7 +27,7 @@ export const action = async () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
+  const contacts = await getSpotifyTracks(q);
   return json({ contacts, q });
 };
 
@@ -96,11 +95,11 @@ export default function App() {
             </Form>
           </div>
                 <blockquote className="text-center text-2xl font-semibold text-gray-900 italic dark:text-white">
-                    Create your professional video using 
+                    Create your professional video using &nbsp;
                       <div className="relative inline-block before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-[#1DB954]">
                          <span className="relative text-white dark:text-gray-950">Spotify</span>
                       </div>
-                    &nbsp; it&apos;s simple now with AI.
+                    &nbsp; it&apos;s simple now with Rosseta AI.
                   </blockquote>
            </div>
 
@@ -113,9 +112,9 @@ export default function App() {
         >    </div>
             <div id="results">
                 <nav>
-                    {contacts.length ? (
+                    {contacts?.length ? (
                         <ul className="contact-list">
-                        {contacts.map((contact) => (
+                        {contacts.map((contact: { id: Key | null | undefined; first: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; last: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
                             <li className="inline-flex py-4 first:pt-0 last:pb-0" key={contact.id}>
                             <div className="ml-3 overflow-hidden">
                               <NavLink
@@ -144,9 +143,7 @@ export default function App() {
                         ))}
                         </ul>
                     ) : (
-                        <p>
-                        <i>No contacts</i>
-                        </p>
+                        <p>No contacts available</p>
                     )}
                 </nav>
               </div>

@@ -74,7 +74,7 @@ def simple_search():
     params = {
         "q": query,
         "type": "track",
-        "limit": 10
+        "limit": 20
     }
 
     response = requests.get(search_url, headers=headers, params=params)
@@ -88,16 +88,15 @@ def simple_search():
     for item in data.get("tracks", {}).get("items", []):
         tracks.append({
             "id": item.get("id"),
-            "trackName": item.get("name"),
-            "album": item.get("album", {}).get("name"),
+            "first": item.get("name"),
+            "last": item.get("album", {}).get("name"),
             "avatar": item.get("album", {}).get("images", [{}])[0].get("url"),
-            "artistName": ", ".join(artist.get("name") for artist in item.get("artists", [])),
-            "notes": None,
-            "favorite": False
+            "twitter": ", ".join(artist.get("name") for artist in item.get("artists", [])),
+           
         })
 
     return jsonify(tracks)
 
 
 if __name__ == "__main__":
-    app.run(port=8084)
+    app.run(host="127.0.0.1", port=8084)

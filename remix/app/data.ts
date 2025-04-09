@@ -73,6 +73,22 @@ export async function getContacts(query?: string | null) {
   return contacts.sort(sortBy("last", "createdAt"));
 }
 
+export async function getSpotifyTracks(query?: string | null) {
+  
+  if (query) {
+    console.log(`Fetching from: http://localhost:8084/simple_search?query=${encodeURIComponent(query)}`);
+    const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent(query)}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);
+    }
+  
+    const contacts = await response.json();
+    return contacts;
+  }
+  return null;
+}
+
 export async function createEmptyContact() {
   const contact = await fakeContacts.create({});
   return contact;
@@ -95,74 +111,68 @@ export async function deleteContact(id: string) {
   fakeContacts.destroy(id);
 }
 
+
+
 [
   {
-    first: "Imagine",
-    last: "John Lennon",
-    avatar: "https://i.scdn.co/image/ab67616d0000b27399581550ef9746ca582bb3cc",
-    favorite: false,
-    id: "7pKfPomDEeI4TPT6EOYjn9",
-    twitter: "Imagine - Remastered 2010"
+    "avatar": "https://i.scdn.co/image/ab67616d0000b27399581550ef9746ca582bb3cc",
+    "first": "Imagine - Remastered 2010",
+    "id": "7pKfPomDEeI4TPT6EOYjn9",
+    "last": "Imagine",
+    "twitter": "John Lennon"
   },
   {
-    first: "Imagínate",
-    last: "Danny Ocean, Kapo",
-    avatar: "https://i.scdn.co/image/ab67616d0000b2737c8510f493813b5730a6f7ba",
-    favorite: false,
-    id: "4zbEItKoaRId1vRZkoO0Uh",
-    twitter: "Imagínate"
+    "avatar": "https://i.scdn.co/image/ab67616d0000b2737c8510f493813b5730a6f7ba",
+    "first": "Imagínate",
+    "id": "4zbEItKoaRId1vRZkoO0Uh",
+    "last": "Imagínate",
+    "twitter": "Danny Ocean, Kapo"
   },
   {
-    first: "Imagine - Remembering Lennon 40th Anniversary",
-    last: "John Lennon Experience",
-    avatar: "https://i.scdn.co/image/ab67616d0000b273fe84759836417d9c41cb9a16",
-    favorite: false,
-    id: "1jYx1g0BXEqvr9bpZoDMS7",
-    twitter: "Imagine"
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273fe84759836417d9c41cb9a16",
+    "first": "Imagine",
+    "id": "1jYx1g0BXEqvr9bpZoDMS7",
+    "last": "Imagine - Remembering Lennon 40th Anniversary",
+    "twitter": "John Lennon Experience"
   },
   {
-    first: "LOOM",
-    last: "Imagine Dragons",
-    avatar: "https://i.scdn.co/image/ab67616d0000b2737eeb115b73e2e6abc3c66d59",
-    favorite: false,
-    id: "7xDd7gl6AGgpiOz5trz4dM",
-    twitter: "Eyes Closed"
+    "avatar": "https://i.scdn.co/image/ab67616d0000b2737eeb115b73e2e6abc3c66d59",
+    "first": "Eyes Closed",
+    "id": "7xDd7gl6AGgpiOz5trz4dM",
+    "last": "LOOM",
+    "twitter": "Imagine Dragons"
   },
   {
-    first: "Evolve",
-    last: "Imagine Dragons",
-    avatar: "https://i.scdn.co/image/ab67616d0000b2735675e83f707f1d7271e5cf8a",
-    favorite: false,
-    id: "0pqnGHJpmpxLKifKRmU6WP",
-    twitter: "Believer"
+    "avatar": "https://i.scdn.co/image/ab67616d0000b2735675e83f707f1d7271e5cf8a",
+    "first": "Believer",
+    "id": "0pqnGHJpmpxLKifKRmU6WP",
+    "last": "Evolve",
+    "twitter": "Imagine Dragons"
   },
   {
-    first: "Night Visions",
-    last: "Imagine Dragons",
-    avatar: "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
-    favorite: false,
-    id: "5qaEfEh1AtSdrdrByCP7qR",
-    twitter: "Demons"
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
+    "first": "Demons",
+    "id": "5qaEfEh1AtSdrdrByCP7qR",
+    "last": "Night Visions",
+    "twitter": "Imagine Dragons"
   },
   {
-    first: "Origins (Deluxe)",
-    last: "Imagine Dragons",
-    avatar: "https://i.scdn.co/image/ab67616d0000b273da6f73a25f4c79d0e6b4a8bd",
-    favorite: false,
-    id: "2FY7b99s15jUprqC0M5NCT",
-    twitter: "Natural",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273da6f73a25f4c79d0e6b4a8bd",
+    "first": "Natural",
+    "id": "2FY7b99s15jUprqC0M5NCT",
+    "last": "Origins (Deluxe)",
+    "twitter": "Imagine Dragons"
   },
   {
-    first: "Imagine",
-    last: "Carbonne",
-    avatar: "https://i.scdn.co/image/ab67616d0000b273213394bc8b490e9d31feb662",
-    favorite: false,
-    id: "6IcsbETuviVu6UTiBTcxY4",
-    twitter: "Imagine",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273213394bc8b490e9d31feb662",
+    "first": "Imagine",
+    "id": "6IcsbETuviVu6UTiBTcxY4",
+    "last": "Imagine",
+    "twitter": "Carbonne"
   }
 ].forEach((contact) => {
   fakeContacts.create({
     ...contact,
-    id: `${contact.first.toLowerCase()}-${contact.last.toLocaleLowerCase()}`,
+    id: `${contact.id}`,
   });
 });
