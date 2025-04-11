@@ -106,14 +106,13 @@ body {
 }
 
 #sidebar {
+  /* Default display is none; overridden dynamically */
+  display: none;
   width: 22rem;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
-  display: none;
   flex-direction: column;
 }
-
-
 
 #index {
   width: 100%;
@@ -124,7 +123,6 @@ body {
   justify-content: flex-start;
   align-items: center;
 }
-
 
 #index > div form {
   position: relative;
@@ -156,8 +154,6 @@ body {
 #index > div form input[type="search"].loading {
   background-image: none;
 }
-
-
 
 #index-spinner {
   width: 1rem;
@@ -193,9 +189,7 @@ body {
   text-decoration: none;
 }
 
-
 #sidebar h1::before {
- 
   margin-right: 0.5rem;
   position: relative;
   top: 1px;
@@ -301,7 +295,6 @@ i {
 #sidebar nav a.active {
   background: hsl(224, 98%, 58%);
   color: white;
-  
 }
 
 #sidebar nav a.pending {
@@ -453,7 +446,6 @@ i {
 #index-page:before {
   display: block;
   margin-bottom: 0.5rem;
-
 }
 
 #error-page {
@@ -495,7 +487,6 @@ i {
   display: inline-block; /* Ensure it behaves like an inline element */
 }
 
-
 #results h1 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -515,9 +506,7 @@ i {
   text-decoration: none;
 }
 
-
 #results h1::before {
- 
   margin-right: 0.5rem;
   position: relative;
   top: 1px;
@@ -552,7 +541,7 @@ i {
 }
 
 #results {
-  width: 87em;
+  width: 91.6%;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
   display: flex;
@@ -561,14 +550,10 @@ i {
   padding-top: 40px;
 }
 
-
-
 #results nav span {
   float: right;
   color: #eeb004;
 }
-
-
 
 #results nav .active i {
   color: inherit;
@@ -606,9 +591,7 @@ i {
 #results nav a.active {
   background: hsl(224, 98%, 58%);
   color: white;
-  
 }
-
 
 #results > * {
   padding-left: 2rem;
@@ -622,7 +605,6 @@ i {
 #results h1 > a:hover {
   text-decoration: none;
 }
-
 
 #results nav a.pending {
   animation: progress 2s infinite ease-in-out;

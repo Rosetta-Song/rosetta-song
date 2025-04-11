@@ -5,12 +5,11 @@ import invariant from "tiny-invariant";
 import type { FunctionComponent } from "react";
 
 import type { ContactRecord } from "../data";
-import { getContact, updateContact } from "../data";
+import { getSimpleTrack, updateContact } from "../data";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
-  // await new Promise((resolve) => setTimeout(resolve, 1000));
-  const contact = await getContact(params.contactId);
+  const contact = await getSimpleTrack(params.contactId);
 
   if (!contact) {
     throw new Response("Not Found", { status: 404 });

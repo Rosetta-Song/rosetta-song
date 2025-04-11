@@ -98,5 +98,34 @@ def simple_search():
     return jsonify(tracks)
 
 
+@app.route("/getSimpleTrack", methods=["GET"])
+def get_simple_track():
+    track_id = request.args.get("id")
+    if not track_id:
+        return jsonify({"error": "id parameter is required"}), 400
+
+    access_token = get_spotify_access_token()
+    headers = {
+        "Authorization": f"Bearer {access_token}"
+    }
+
+    track_url = f"https://api.spotify.com/v1/tracks/{track_id}"
+    response = requests.get(track_url, headers=headers)
+
+    if response.status_code != 200:
+        return jsonify({"error": f"Spotify API error: {response.json()}"}), response.status_code
+
+    data = response.json()
+    simplified_track = {
+        "id": data.get("id"),
+        "first": data.get("name"),
+        "last": data.get("album", {}).get("name"),
+        "twitter": ", ".join(artist.get("name") for artist in data.get("artists", [])),
+        "avatar": data.get("album", {}).get("images", [{}])[0].get("url"),
+    }
+
+    return jsonify(simplified_track)
+
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8084)

@@ -89,6 +89,21 @@ export async function getSpotifyTracks(query?: string | null) {
   return null;
 }
 
+export async function getSimpleTrack(id: string) {
+  if (!id) {
+    throw new Error("Track ID is required");
+  }
+
+  const response = await fetch(`http://127.0.0.1:8084/getSimpleTrack?id=${encodeURIComponent(id)}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch track details: ${response.statusText}`);
+  }
+
+  const track = await response.json();
+  return track;
+}
+
 export async function createEmptyContact() {
   const contact = await fakeContacts.create({});
   return contact;
