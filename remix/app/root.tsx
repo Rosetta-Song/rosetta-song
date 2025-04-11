@@ -30,7 +30,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
   const contacts = await getContacts(q);
-  //const contacts = await getSpotifyTracks(q);
+  console.log("contacts", contacts);
+  const tracks = await getSpotifyTracks(q);
+  console.log("tracks", tracks);
   return json({ contacts, q });
 };
 
@@ -103,34 +105,34 @@ export default function App() {
             </Form>
           </div>
           <nav>
-            {contacts.length ? ( // Safely check length
-              <ul>
-                {contacts.map((contact: { id: Key | null | undefined; first: string; last: string; favorite: string; }) => (
-                  <li key={contact.id}>
-                    <NavLink
-                      className={({ isActive, isPending }) =>
-                        isActive ? "active" : isPending ? "pending" : ""
-                      }
-                      to={`contacts/${contact.id}`}
-                    >
-                      {contact.first || contact.last ? (
-                        <>
-                          {contact.first} {contact.last}
-                        </>
-                      ) : (
-                        <i>No Name</i>
-                      )}{" "}
-                      {contact.favorite ? <span>★</span> : null}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>
-                <i>No contacts</i>
-              </p>
-            )}
-          </nav>
+                             {contacts?.length ? (
+                                 <ul className="contact-list">
+                                 {contacts.map((contact: { id: Key | null | undefined; first: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; last: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
+                                     <li key={contact.id}>
+                                     <NavLink
+                                       className={({ isActive, isPending }) =>
+                                         isActive ? "active" : isPending ? "pending" : ""
+                                       }
+                                       to={`contacts/${contact.id}`}
+                                     >
+                                       {contact.first || contact.last ? (
+                                         <>
+                                           {contact.first} {contact.last}
+                                         </>
+                                       ) : (
+                                         <i>No Name</i>
+                                       )}{" "}
+                                       {contact.favorite ? <span>★</span> : null}
+                                     </NavLink>
+                                   </li>
+                                 ))}
+                               </ul>
+                             ) : (
+                               <p>
+                                 <i>No contacts</i>
+                               </p>
+                             )}
+                         </nav>
         </div>
 
         <div
