@@ -60,7 +60,7 @@ export default function App() {
         <Links />
       </head>
       <body id="index-body">
-      </div>
+  
         
         <div className="static">
             <div className="absolute top-20 left-220">   </div>
