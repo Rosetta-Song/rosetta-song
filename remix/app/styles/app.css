@@ -248,13 +248,7 @@ body {
   padding-top: 1rem;
 }
 
-#sidebar nav a span {
-  float: right;
-  color: #eeb004;
-}
-#sidebar nav a.active span {
-  color: inherit;
-}
+
 
 i {
   color: #818181;
@@ -487,6 +481,16 @@ i {
   display: inline-block; /* Ensure it behaves like an inline element */
 }
 
+#logo-image-index {
+  width: 165px; /* Set the width */
+  height: 165px; /* Set the height */
+  background-image: url("/app/logo.png"); /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  display: inline-block; /* Ensure it behaves like an inline element */
+}
+
 #results h1 {
   font-size: 1.5rem;
   font-weight: 500;
@@ -550,10 +554,7 @@ i {
   padding-top: 40px;
 }
 
-#results nav span {
-  float: right;
-  color: #eeb004;
-}
+
 
 #results nav .active i {
   color: inherit;
