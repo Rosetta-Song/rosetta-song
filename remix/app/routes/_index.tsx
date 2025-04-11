@@ -121,7 +121,7 @@ export default function App() {
                                   className={({ isActive, isPending }) =>
                                   isActive ? "active" : isPending ? "pending" : ""
                                   }
-                                  to={`contacts/${contact.id}?q=${q}`}
+                                  to={`contacts/${contact.id}?q=${q ?? "Top Hits"}`}
                               >
                                   {contact.first || contact.last ? (
                                   <>

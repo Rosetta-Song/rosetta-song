@@ -54,7 +54,7 @@ export default function App() {
   useEffect(() => {
     const searchField = document.getElementById("q");
     if (searchField instanceof HTMLInputElement) {
-      searchField.value = q ?? "";
+      searchField.value = q ?? "Top Hits";
     }
   }, [q]);
 
@@ -91,8 +91,8 @@ export default function App() {
               <input
                 id="q"
                 aria-label="Search contacts"
-                className={searching ? "loading" : ""}
-                defaultValue={q ?? ""}
+                className={searching ? "loading" : "Top Hits"}
+                defaultValue={q ?? "Top Hits"}
                 placeholder="Search"
                 type="search"
                 name="q"
