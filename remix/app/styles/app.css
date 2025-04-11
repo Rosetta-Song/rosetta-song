@@ -136,7 +136,7 @@ body {
   width: 330%;
   padding-left: 2rem;
   width: 100%; /* Full width for mobile */
-  max-width: 400px; /* Limit width on larger screens */
+  max-width: 720px; /* Limit width on larger screens */
   font-size: 1rem; /* Increase font size for readability */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -328,7 +328,7 @@ i {
 }
 
 #contact h1 {
-  font-size: 2rem;
+  font-size: 3.5rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
@@ -454,7 +454,7 @@ i {
 
 #logo-side-dark {
   background-image: url("/app/logo-side-dark.png");
-  width: 204px; /* Set the width */
+  width: 280px; /* Set the width */
   height: 204px;
   align-content: center;
   /* Set the background image */
@@ -634,5 +634,10 @@ i {
 #results nav a.pending {
   animation: progress 2s infinite ease-in-out;
   animation-delay: 200ms;
+}
+
+#prompt{
+  position: relative;
+  width: 100%;
 }
 

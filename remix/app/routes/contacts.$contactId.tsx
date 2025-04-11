@@ -50,21 +50,19 @@ export default function Contact() {
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
       />
-      <div className="flex items-starts gap-4"></div>
-
-      <div></div>
+    
 
       <div>
         {contact.notes ? <p>{contact.notes}</p> : null}
       </div>
-      <div className="relative">
+      <div id="prompt" className="relative">
         <br />
-        <h1>Generate AI Video</h1>
+        <h1>Rosseta AI Video Generator</h1>
         
         <p>Generate AI Video from a Spotify track</p>
-        <br />
+       
         <div>
-            <p>Write your prompt for the AI Video</p>
+            
             <textarea
               id="prompt"
               name="prompt"
@@ -72,10 +70,39 @@ export default function Contact() {
               className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none bg-gradient-to-r from-blue-50 to-purple-50 text-gray-700"
               rows={5}
             ></textarea>
+           
           </div>
-        <div className="grid grid-cols-2 gap-6">
+       
           <div>
-            <p>Choose a language for the AI Video</p>
+          <div className="grid grid-cols-5 gap-4">
+            <div className="...">   
+              <Form method="post" action="model">
+                <label htmlFor="model">Model: </label>
+                <select
+                  id="model"
+                  name="model"
+                  className="w-full p-2 border border-gray-300 rounded-md"
+                >
+                  <option value="synthesia">Rosseta</option>
+                  <option value="synthesia">Synthesia</option>
+                  <option value="hailuo">Hailuo</option>
+                  <option value="alibaba-qwen">Alibaba Qwen</option>
+                  <option value="kling">Kling</option>
+                  <option value="runway">Runway</option>
+                  <option value="google-veo">Google Veo</option>
+                  <option value="openai-sora">OpenAI Sor</option>
+                  <option value="pika">Pika</option>
+                  <option value="luma">Luma</option>
+                  <option value="adobe-firefly">Adobe Firefly</option>
+                  <option value="gpt-4o">GPT-4o</option>
+                  <option value="gemini-25">Gemini-2.5 Pro</option>
+                  <option value="claude-37">Claude 3.7</option>
+                  <option value="llama-3">Llama 3</option>
+                  <option value="deep-sek">Deep Seek</option>
+                </select>
+            </Form>
+            </div>
+            <div className="...">
             <Form method="post" action="language">
               <label htmlFor="language">Language: </label>
               <select
@@ -121,9 +148,9 @@ export default function Contact() {
                 <option value="et">Estonian</option>
               </select>
             </Form>
-          </div>
-          <div>
-            <p>Choose a style for the AI Video</p>
+            
+            </div>
+            <div className="...">
             <Form method="post" action="style">
               <label htmlFor="style">Style: </label>
               <select
@@ -142,9 +169,8 @@ export default function Contact() {
                 <option value="urban">Urban</option>
               </select>
             </Form>
-          </div>
-          <div>
-            <p>Choose a theme for the AI Video</p>
+            </div>
+            <div className="...">
             <Form method="post" action="theme">
               <label htmlFor="theme">Theme: </label>
               <select
@@ -167,12 +193,26 @@ export default function Contact() {
                 <option value="horror">Horror</option>
                 <option value="fantasy">Fantasy</option>
               </select>
+
             </Form>
+            </div>
+            <div className="...">
+              <div className="flex justify-end mt-4">
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                >
+                  Generate ai Video
+                </button>
+              </div>  
+            </div>
+            
           </div>
-      
-        </div>
+          </div>
+         </div>
+       
       </div>
-    </div>
+    
   );
 }
 

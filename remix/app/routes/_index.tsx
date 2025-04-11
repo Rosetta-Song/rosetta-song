@@ -84,15 +84,13 @@ export default function App() {
       
         
       <div className="flex flex-row" id="index">
-        <div id="index-logo" className="basis-1/4">
+        <div id="index-logo" className="basis-1/5">
             
             <div id="logo-side-dark" aria-label="Rosseta Song"></div>
          
         </div> 
-        <div id="index-logo" className="basis-1/4">
-          <div id="logo-image-index" aria-label="Rosseta Song"></div>
-        </div>
-          <div className="basis-2/4">
+      
+          <div className="basis-3/5">
             <Form
               id="index-search-form"
               role="search"
@@ -115,7 +113,8 @@ export default function App() {
               <div id="index-search-spinner" aria-hidden hidden={!searching} />
             </Form>
           </div>
-          <div className="basis-2/4">
+        
+          <div className="basis-1/5">
                 <blockquote className="text-center text-2xl font-semibold text-gray-900 italic dark:text-white">
             
                Create professional video with &nbsp;
