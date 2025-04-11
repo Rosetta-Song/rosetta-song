@@ -9,7 +9,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
   const contact = await getContact(params.contactId);
   if (!contact) {
-    throw new Response("Not Found", { status: 404 });
+    throw new Response("Track Not Found", { status: 404 });
   }
   return json({ contact });
 };
@@ -31,24 +31,24 @@ export default function EditContact() {
       <p>
         <span>Name</span>
         <input
-          defaultValue={contact.first}
-          aria-label="First name"
-          name="first"
+          defaultValue={contact.name}
+          aria-label="Title"
+          name="name"
           type="text"
-          placeholder="First"
+          placeholder="Title"
         />
         <input
-          aria-label="Last name"
-          defaultValue={contact.last}
-          name="last"
-          placeholder="Last"
+          aria-label="Album"
+          defaultValue={contact.album}
+          name="Album"
+          placeholder="Album"
           type="text"
         />
       </p>
       <label>
         <span>Twitter</span>
         <input
-          defaultValue={contact.twitter}
+          defaultValue={contact.artist}
           name="twitter"
           placeholder="@jack"
           type="text"

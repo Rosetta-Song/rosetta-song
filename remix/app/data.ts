@@ -62,6 +62,68 @@ const fakeContacts = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Handful of helper functions to be called from route loaders and actions
+
+const famousSingers = [
+  "Taylor Swift",
+  "Beyoncé",
+  "Ed Sheeran",
+  "Adele",
+  "Justin Bieber",
+  "Ariana Grande",
+  "Drake",
+  "Billie Eilish",
+  "The Weeknd",
+  "Rihanna",
+  "Bruno Mars",
+  "Lady Gaga",
+  "Katy Perry",
+  "Shakira",
+  "Elton John",
+  "Celine Dion",
+  "Michael Jackson",
+  "Whitney Houston",
+  "Madonna",
+  "Elvis Presley",
+  "Frank Sinatra",
+  "Freddie Mercury",
+  "John Lennon",
+  "Paul McCartney",
+  "Bob Dylan",
+  "Eminem",
+  "Kanye West",
+  "Jay-Z",
+  "Dua Lipa",
+  "Harry Styles",
+  "Sam Smith",
+  "Selena Gomez",
+  "Shawn Mendes",
+  "Camila Cabello",
+  "Jennifer Lopez",
+  "Christina Aguilera",
+  "Mariah Carey",
+  "Post Malone",
+  "Olivia Rodrigo",
+  "Doja Cat",
+  "Bad Bunny",
+  "Karol G",
+  "Maluma",
+  "J Balvin",
+  "Rosalía",
+  "Taylor Swift",
+  "Lana Del Rey",
+  "Sia",
+  "Pitbull",
+  "Enrique Iglesias",
+  "Andrea Bocelli",
+];
+
+function getRandomArtist(): string {
+  const randomIndex = Math.floor(Math.random() * famousSingers.length);
+  return famousSingers[randomIndex];
+}
+
+
+
 export async function getContacts(query?: string | null) {
   await new Promise((resolve) => setTimeout(resolve, 500));
   let contacts = await fakeContacts.getAll();
@@ -86,7 +148,8 @@ export async function getSpotifyTracks(query?: string | null) {
     const contacts = await response.json();
     return contacts;
   }else {
-    const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent("Top Hits")}`);
+    const randomArtist = getRandomArtist()
+    const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent(randomArtist)}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);

@@ -31,55 +31,145 @@ export default function Contact() {
 
   return (
     <div id="contact">
-      <div>
-        <img
-          alt={`${contact.name} ${contact.album} avatar`}
-          key={contact.avatar}
-          src={contact.avatar}
-        />
+      <div className="absolute top-18 right-20 ...">
+        <Form action="edit">
+          <button type="submit">Generate AI Video&nbsp;&nbsp;&nbsp;</button>
+        </Form>
       </div>
-
-      <div>
+      <div className="absolute top-18 right-20 ...">
         <h1>
-          {contact.name || contact.album ? (
-            <>
-              {contact.name} {contact.album}
-            </>
-          ) : (
-            <i>No Name</i>
-          )}{" "}
           <Favorite contact={contact} />
         </h1>
+      </div>
+      <iframe
+        style={{ borderRadius: "12px" }}
+        src={`https://open.spotify.com/embed/track/${contact.id}?utm_source=generator`}
+        width="100%"
+        height="352"
+        title="Spotify Track Player"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      />
+      <div className="flex items-starts gap-4"></div>
 
-        {contact.artist ? (
-          <p>
-            <a href={`https://twitter.com/${contact.artist}`}>
-              {contact.twitter}
-            </a>
-          </p>
-        ) : null}
+      <div></div>
 
+      <div>
         {contact.notes ? <p>{contact.notes}</p> : null}
-
+      </div>
+      <div className="relative">
+        <br />
+        <h1>Generate AI Video</h1>
+        
+        <p>Generate AI Video from a Spotify track</p>
+        <br />
         <div>
-          <Form action="edit">
-            <button type="submit">Edit</button>
-          </Form>
-
-          <Form
-            action="destroy"
-            method="post"
-            onSubmit={(event) => {
-              const response = confirm(
-                "Please confirm you want to delete this record."
-              );
-              if (!response) {
-                event.preventDefault();
-              }
-            }}
-          >
-            <button type="submit">Delete</button>
-          </Form>
+            <p>Write your prompt for the AI Video</p>
+            <textarea
+              id="prompt"
+              name="prompt"
+              placeholder="Enter your prompt here..."
+              className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none bg-gradient-to-r from-blue-50 to-purple-50 text-gray-700"
+              rows={5}
+            ></textarea>
+          </div>
+        <div className="grid grid-cols-2 gap-6">
+          <div>
+            <p>Choose a language for the AI Video</p>
+            <Form method="post" action="language">
+              <label htmlFor="language">Language: </label>
+              <select
+                id="language"
+                name="language"
+                className="w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="it">Italian</option>
+                <option value="pt">Portuguese</option>
+                <option value="zh">Chinese</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="ru">Russian</option>
+                <option value="ar">Arabic</option>
+                <option value="hi">Hindi</option>
+                <option value="bn">Bengali</option>
+                <option value="pa">Punjabi</option>
+                <option value="tr">Turkish</option>
+                <option value="vi">Vietnamese</option>
+                <option value="th">Thai</option>
+                <option value="id">Indonesian</option>
+                <option value="ms">Malay</option>
+                <option value="sw">Swahili</option>
+                <option value="tl">Tagalog</option>
+                <option value="fi">Finnish</option>
+                <option value="no">Norwegian</option>
+                <option value="da">Danish</option>
+                <option value="sv">Swedish</option>
+                <option value="el">Greek</option>
+                <option value="hu">Hungarian</option>
+                <option value="cs">Czech</option>
+                <option value="ro">Romanian</option>
+                <option value="sk">Slovak</option>
+                <option value="bg">Bulgarian</option>
+                <option value="hr">Croatian</option>
+                <option value="sl">Slovenian</option>
+                <option value="lt">Lithuanian</option>
+                <option value="lv">Latvian</option>
+                <option value="et">Estonian</option>
+              </select>
+            </Form>
+          </div>
+          <div>
+            <p>Choose a style for the AI Video</p>
+            <Form method="post" action="style">
+              <label htmlFor="style">Style: </label>
+              <select
+                id="style"
+                name="style"
+                className="w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="realistic">Realistic</option>
+                <option value="cartoon">Cartoon</option>
+                <option value="anime">Anime</option>
+                <option value="abstract">Abstract</option>
+                <option value="minimalist">Minimalist</option>
+                <option value="retro">Retro</option>
+                <option value="futuristic">Futuristic</option>
+                <option value="nature">Nature</option>
+                <option value="urban">Urban</option>
+              </select>
+            </Form>
+          </div>
+          <div>
+            <p>Choose a theme for the AI Video</p>
+            <Form method="post" action="theme">
+              <label htmlFor="theme">Theme: </label>
+              <select
+                id="theme"
+                name="theme"
+                className="w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="dark">Dark</option>
+                <option value="light">Light</option>
+                <option value="colorful">Colorful</option>
+                <option value="minimal">Minimal</option>
+                <option value="retro">Retro</option>
+                <option value="futuristic">Futuristic</option>
+                <option value="nature">Nature</option>
+                <option value="abstract">Abstract</option>
+                <option value="business">Business</option>
+                <option value="funny">Funny</option>
+                <option value="romantic">Romantic</option>
+                <option value="adventure">Adventure</option>
+                <option value="horror">Horror</option>
+                <option value="fantasy">Fantasy</option>
+              </select>
+            </Form>
+          </div>
+      
         </div>
       </div>
     </div>
@@ -101,7 +191,37 @@ const Favorite: FunctionComponent<{
         name="favorite"
         value={favorite ? "false" : "true"}
       >
-        {favorite ? "★" : "☆"}
+        {favorite ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+            />
+          </svg>
+        ) : (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+            />
+          </svg>
+        )}
       </button>
     </fetcher.Form>
   );

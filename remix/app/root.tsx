@@ -18,7 +18,7 @@ import {
 
 import appStylesHref from "./styles/app.css";
 
-import { createEmptyContact,  getSpotifyTracks } from "./data";
+import { createEmptyContact, getSpotifyTracks } from "./data";
 import { Key, useEffect } from "react";
 
 export const action = async () => {
@@ -54,7 +54,7 @@ export default function App() {
   useEffect(() => {
     const searchField = document.getElementById("q");
     if (searchField instanceof HTMLInputElement) {
-      searchField.value = q ?? "Top Hits";
+      searchField.value = q ?? "";
     }
   }, [q]);
 
@@ -71,10 +71,12 @@ export default function App() {
           id="sidebar"
           style={{ display: isIndexPage ? "none" : "flex" }}
         >
-          <NavLink to="/">
+          <NavLink id="top-bar" to="/">
             <h1 id="logo">
-              <div id="logo-image" aria-label="Rosseta Song"></div>
-              Rosseta Song
+            
+               <div id="logo-side-dark-topbar" aria-label="Rosseta Song"></div>
+              
+            
             </h1>
           </NavLink>
           <div>
@@ -91,7 +93,7 @@ export default function App() {
               <input
                 id="q"
                 aria-label="Search contacts"
-                className={searching ? "loading" : "Top Hits"}
+                className={searching ? "loading" : ""}
                 defaultValue={q ?? "Top Hits"}
                 placeholder="Search"
                 type="search"
@@ -104,34 +106,46 @@ export default function App() {
             </Form>
           </div>
           <nav>
-                             {contacts?.length ? (
-                                 <ul className="contact-list">
-                                 {contacts.map((contact: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; album: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
-                                     <li key={contact.id}>
-                                     <NavLink
-                                       className={({ isActive, isPending }) =>
-                                         isActive ? "active" : isPending ? "pending" : ""
-                                       }
-                                        to={`contacts/${contact.id}?q=${q}`}
-                                     >
-                                       {contact.name || contact.album ? (
-                                         <>
-                                           {contact.name} {contact.album}
-                                         </>
-                                       ) : (
-                                         <i>No Name</i>
-                                       )}{" "}
-                                       {contact.favorite ? <span>★</span> : null}
-                                     </NavLink>
-                                   </li>
-                                 ))}
-                               </ul>
-                             ) : (
-                               <p>
-                                 <i>No contacts</i>
-                               </p>
-                             )}
-                         </nav>
+            {contacts?.length ? (
+              <ul className="contact-list">
+                {contacts.map((contact: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; album: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
+                  <li key={contact.id} className="flex space-x-4 p-2 hover:bg-gray-100 rounded-md">
+                
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        `flex-1 ${isActive ? "text-blue-500 font-bold" : isPending ? "text-gray-500" : "text-gray-800"}`
+                      }
+                      to={`contacts/${contact.id}?q=${q}`}
+                    >
+                      {contact.name || contact.album ? (
+                        <>
+                            {contact.avatar && (
+                              <img
+                                src={contact.avatar}
+                                alt={`${contact.name || "Contact"}'s avatar`}
+                                className="flex-shrink-0  w-24 h-24 object-cover rounded-md"
+                              
+                              />
+                            )}
+                          <div className="grid">
+                            <span className="font-medium">{contact.name}</span>
+                            <span className="text-sm text-gray-500">{contact.album}</span>
+                          </div>  
+                        </>
+                      ) : (
+                        <i className="text-gray-500">No Name</i>
+                      )}
+                    </NavLink>
+                    {contact.favorite && <span className="text-yellow-500">★</span>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>
+                <i>No contacts</i>
+              </p>
+            )}
+          </nav>
         </div>
 
         <div

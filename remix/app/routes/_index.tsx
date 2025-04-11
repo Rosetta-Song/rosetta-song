@@ -14,7 +14,7 @@ import {
   useSubmit,
 } from "@remix-run/react";
 
-import appStylesHref from "../styles/app.css";
+
 
 import { createEmptyContact, getSpotifyTracks } from "../data";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
@@ -31,9 +31,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ contacts, q });
 };
 
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: appStylesHref },
-];
+
 
 export default function App() {
   const { contacts, q } = useLoaderData<typeof loader>();
@@ -109,7 +107,7 @@ export default function App() {
                 id="q"
                 aria-label="Search contacts"
                 className={`w-full p-4 border rounded ${searching ? "loading" : ""}`}
-                defaultValue={q || ""}
+                defaultValue={q ?? ""}
                 placeholder="Search your song"
                 type="search"
                 name="q"
@@ -153,7 +151,7 @@ export default function App() {
                                   className={({ isActive, isPending }) =>
                                   isActive ? "active" : isPending ? "pending" : ""
                                   }
-                                  to={`contacts/${contact.id}?q=${q ?? "Top Hits"}`}
+                                  to={`contacts/${contact.id}?q=${q ?? ""}`}
                               >
                                   {contact.name || contact.album ? (
                                   <>        

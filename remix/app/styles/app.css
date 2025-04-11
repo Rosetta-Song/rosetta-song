@@ -71,16 +71,16 @@ button:active {
 }
 #contact h1 form button {
   box-shadow: none;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 400;
   padding: 0;
 }
 #contact h1 form button[value="true"] {
-  color: #a4a4a4;
+  color:#eeb004;
 }
 #contact h1 form button[value="true"]:hover,
 #contact h1 form button[value="false"] {
-  color: #eeb004;
+  color: #f7f;
 }
 
 form[action$="destroy"] button {
@@ -104,11 +104,14 @@ body {
   height: 100%;
   width: 100%;
 }
+#top-bar{
+  background-color: #f7f;
+}
 
 #sidebar {
   /* Default display is none; overridden dynamically */
   display: none;
-  width: 22rem;
+  width: 24rem;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
   flex-direction: column;
@@ -270,7 +273,6 @@ i {
 #sidebar nav a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   overflow: hidden;
 
   white-space: pre;
@@ -321,8 +323,8 @@ i {
 }
 
 #contact {
-  max-width: 40rem;
-  display: flex;
+  max-width: 65rem;
+  display: ruby;
 }
 
 #contact h1 {
@@ -461,6 +463,17 @@ i {
   background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
+#logo-side-dark-topbar {
+  background-image: url("/app/logo-side-dark.png");
+  width: 306px; /* Set the width */
+  height: 143px;
+  align-content: center;
+  /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
+
 #logo {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
@@ -490,6 +503,17 @@ i {
   background-repeat: no-repeat; /* Prevent the image from repeating */
   display: inline-block; /* Ensure it behaves like an inline element */
 }
+
+#logo-image-index-topbar {
+  width: 116px; /* Set the width */
+  height: 116px; /* Set the height */
+  background-image: url("/app/logo.png"); /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  display: inline-block; /* Ensure it behaves like an inline element */
+}
+
 
 #results h1 {
   font-size: 1.5rem;

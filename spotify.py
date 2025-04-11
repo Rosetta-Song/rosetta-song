@@ -48,7 +48,7 @@ def search_spotify():
     params = {
         "q": query,
         "type": search_type,
-        "limit": 10
+        "limit": 21
     }
 
     response = requests.get(search_url, headers=headers, params=params)
@@ -74,7 +74,7 @@ def simple_search():
     params = {
         "q": query,
         "type": "track",
-        "limit": 20
+        "limit": 21
     }
 
     response = requests.get(search_url, headers=headers, params=params)
