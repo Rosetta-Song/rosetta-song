@@ -33,45 +33,44 @@ export default function Contact() {
     <div id="contact">
       <div className="absolute top-18 right-20 ...">
         <Form action="edit">
-          <button type="submit">Generate AI Video&nbsp;&nbsp;&nbsp;</button>
+          <button hidden type="submit">Generate AI Video&nbsp;&nbsp;&nbsp;</button>
         </Form>
       </div>
-      <div className="absolute top-18 right-20 ...">
+      <div hidden className="absolute top-18 right-20 ...">
         <h1>
           <Favorite contact={contact} />
         </h1>
       </div>
-      <iframe
-        style={{ borderRadius: "12px" }}
-        src={`https://open.spotify.com/embed/track/${contact.id}?utm_source=generator`}
-        width="100%"
-        height="352"
-        title="Spotify Track Player"
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      />
-    
-
-      <div>
-        {contact.notes ? <p>{contact.notes}</p> : null}
-      </div>
+ 
+     
       <div id="prompt" className="relative">
-        <br />
-        <h1>Rosseta AI Video Generator</h1>
+       
+        <h1>Video Generator</h1>
         
-        <p>Generate AI Video from a Spotify track</p>
+        <p>&nbsp;&nbsp;Generate AI Video from Spotify tracks</p>
+        <br />
+        <iframe
+            style={{ borderRadius: "12px" }}
+            src={`https://open.spotify.com/embed/track/${contact.id}?utm_source=generator`}
+            width="100%"
+            height="252"
+            title="Spotify Track Player"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          />
        
         <div>
             
             <textarea
               id="prompt"
               name="prompt"
-              placeholder="Enter your prompt here..."
+              placeholder={contact.notes ? contact.notes : "Enter your prompt here..."}
               className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none bg-gradient-to-r from-blue-50 to-purple-50 text-gray-700"
               rows={5}
             ></textarea>
            
           </div>
+   
        
           <div>
           <div className="grid grid-cols-5 gap-4">
@@ -83,7 +82,7 @@ export default function Contact() {
                   name="model"
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="synthesia">Rosseta</option>
+                  <option value="synthesia">Rosseta 4</option>
                   <option value="synthesia">Synthesia</option>
                   <option value="hailuo">Hailuo</option>
                   <option value="alibaba-qwen">Alibaba Qwen</option>
@@ -158,6 +157,7 @@ export default function Contact() {
                 name="style"
                 className="w-full p-2 border border-gray-300 rounded-md"
               >
+                <option value="realistic">Lyrics</option>
                 <option value="realistic">Realistic</option>
                 <option value="cartoon">Cartoon</option>
                 <option value="anime">Anime</option>
@@ -178,8 +178,8 @@ export default function Contact() {
                 name="theme"
                 className="w-full p-2 border border-gray-300 rounded-md"
               >
-                <option value="dark">Dark</option>
                 <option value="light">Light</option>
+                <option value="dark">Dark</option>
                 <option value="colorful">Colorful</option>
                 <option value="minimal">Minimal</option>
                 <option value="retro">Retro</option>
@@ -197,20 +197,26 @@ export default function Contact() {
             </Form>
             </div>
             <div className="...">
-              <div className="flex justify-end mt-4">
+            
+              <div id="action-button" className="flex justify-end mt-4">
                 <button
                   type="submit"
                   className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                 >
-                  Generate ai Video
+                  Generate AI Video&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 </button>
+                <div className="absolute bottom-10 right-2 ...">
+                    <h1>
+                      <Favorite contact={contact} />
+                    </h1>
+                  </div>
               </div>  
             </div>
             
           </div>
           </div>
          </div>
-       
+     
       </div>
     
   );
