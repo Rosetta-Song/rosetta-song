@@ -29,10 +29,9 @@ export const action = async () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
-  console.log("contacts", contacts);
-  const tracks = await getSpotifyTracks(q);
-  console.log("tracks", tracks);
+  console.log("q", q);
+  const contacts = await getSpotifyTracks(q);
+  console.log("tracks", contacts);
   return json({ contacts, q });
 };
 
@@ -113,7 +112,7 @@ export default function App() {
                                        className={({ isActive, isPending }) =>
                                          isActive ? "active" : isPending ? "pending" : ""
                                        }
-                                       to={`contacts/${contact.id}`}
+                                        to={`contacts/${contact.id}?q=${q}`}
                                      >
                                        {contact.first || contact.last ? (
                                          <>

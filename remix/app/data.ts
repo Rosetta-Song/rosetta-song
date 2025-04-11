@@ -85,6 +85,15 @@ export async function getSpotifyTracks(query?: string | null) {
   
     const contacts = await response.json();
     return contacts;
+  }else {
+    const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent("To Hits")}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);
+    }
+  
+    const contacts = await response.json();
+    return contacts;
   }
   return null;
 }
