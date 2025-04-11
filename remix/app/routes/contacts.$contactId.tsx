@@ -33,7 +33,7 @@ export default function Contact() {
     <div id="contact">
       <div>
         <img
-          alt={`${contact.first} ${contact.last} avatar`}
+          alt={`${contact.name} ${contact.album} avatar`}
           key={contact.avatar}
           src={contact.avatar}
         />
@@ -41,9 +41,9 @@ export default function Contact() {
 
       <div>
         <h1>
-          {contact.first || contact.last ? (
+          {contact.name || contact.album ? (
             <>
-              {contact.first} {contact.last}
+              {contact.name} {contact.album}
             </>
           ) : (
             <i>No Name</i>
@@ -51,9 +51,9 @@ export default function Contact() {
           <Favorite contact={contact} />
         </h1>
 
-        {contact.twitter ? (
+        {contact.artist ? (
           <p>
-            <a href={`https://twitter.com/${contact.twitter}`}>
+            <a href={`https://twitter.com/${contact.artist}`}>
               {contact.twitter}
             </a>
           </p>

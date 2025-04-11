@@ -114,7 +114,7 @@ export default function App() {
                 <nav>
                     {contacts?.length ? (
                         <ul className="contact-list">
-                        {contacts.map((contact: { id: Key | null | undefined; first: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; last: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
+                        {contacts.map((contact: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; album: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; artist: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
                             <li className="inline-flex py-4 first:pt-0 last:pb-0" key={contact.id}>
                             <div className="ml-3 overflow-hidden">
                               <NavLink
@@ -123,12 +123,12 @@ export default function App() {
                                   }
                                   to={`contacts/${contact.id}?q=${q ?? "Top Hits"}`}
                               >
-                                  {contact.first || contact.last ? (
+                                  {contact.name || contact.album ? (
                                   <>
                                                     <img className="h-20 w-20 rounded-full" src={contact.avatar} alt="" />
                                                    
-                                                    <p className="text-sm font-medium text-gray-900 dark:text-white">{contact.first} {contact.last}</p>  
-                                                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">{contact.twitter}</p>
+                                                    <p className="text-sm font-medium text-gray-900 dark:text-white">{contact.name} {contact.album}</p>  
+                                                    <p className="truncate text-sm text-gray-500 dark:text-gray-400">{contact.artist}</p>
                                   </>
                                   ) : (
                                   <i>No Name</i>

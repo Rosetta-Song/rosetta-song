@@ -88,10 +88,10 @@ def simple_search():
     for item in data.get("tracks", {}).get("items", []):
         tracks.append({
             "id": item.get("id"),
-            "first": item.get("name"),
-            "last": item.get("album", {}).get("name"),
+            "name": item.get("name"),
+            "album": item.get("album", {}).get("name"),
             "avatar": item.get("album", {}).get("images", [{}])[0].get("url"),
-            "twitter": ", ".join(artist.get("name") for artist in item.get("artists", [])),
+            "artist": ", ".join(artist.get("name") for artist in item.get("artists", [])),
            
         })
 
@@ -118,9 +118,9 @@ def get_simple_track():
     data = response.json()
     simplified_track = {
         "id": data.get("id"),
-        "first": data.get("name"),
-        "last": data.get("album", {}).get("name"),
-        "twitter": ", ".join(artist.get("name") for artist in data.get("artists", [])),
+        "name": data.get("name"),
+        "album": data.get("album", {}).get("name"),
+        "artist": ", ".join(artist.get("name") for artist in data.get("artists", [])),
         "avatar": data.get("album", {}).get("images", [{}])[0].get("url"),
     }
 

@@ -18,7 +18,7 @@ import {
 
 import appStylesHref from "./styles/app.css";
 
-import { createEmptyContact,getContacts,  getSpotifyTracks } from "./data";
+import { createEmptyContact,  getSpotifyTracks } from "./data";
 import { Key, useEffect } from "react";
 
 export const action = async () => {
@@ -106,7 +106,7 @@ export default function App() {
           <nav>
                              {contacts?.length ? (
                                  <ul className="contact-list">
-                                 {contacts.map((contact: { id: Key | null | undefined; first: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; last: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
+                                 {contacts.map((contact: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; album: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
                                      <li key={contact.id}>
                                      <NavLink
                                        className={({ isActive, isPending }) =>
@@ -114,9 +114,9 @@ export default function App() {
                                        }
                                         to={`contacts/${contact.id}?q=${q}`}
                                      >
-                                       {contact.first || contact.last ? (
+                                       {contact.name || contact.album ? (
                                          <>
-                                           {contact.first} {contact.last}
+                                           {contact.name} {contact.album}
                                          </>
                                        ) : (
                                          <i>No Name</i>

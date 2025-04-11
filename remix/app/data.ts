@@ -9,10 +9,10 @@ import invariant from "tiny-invariant";
 
 type ContactMutation = {
   id?: string;
-  first?: string;
-  last?: string;
+  name?: string; // first 
+  album?: string; // last
   avatar?: string;
-  twitter?: string;
+  artist?: string; // twitter
   notes?: string;
   favorite?: boolean;
 };
@@ -31,7 +31,7 @@ const fakeContacts = {
   async getAll(): Promise<ContactRecord[]> {
     return Object.keys(fakeContacts.records)
       .map((key) => fakeContacts.records[key])
-      .sort(sortBy("-createdAt", "last"));
+      .sort(sortBy("-createdAt", "album"));
   },
 
   async get(id: string): Promise<ContactRecord | null> {
@@ -67,10 +67,10 @@ export async function getContacts(query?: string | null) {
   let contacts = await fakeContacts.getAll();
   if (query) {
     contacts = matchSorter(contacts, query, {
-      keys: ["first", "last"],
+      keys: ["name", "album"],
     });
   }
-  return contacts.sort(sortBy("last", "createdAt"));
+  return contacts.sort(sortBy("album", "createdAt"));
 }
 
 export async function getSpotifyTracks(query?: string | null) {
@@ -95,7 +95,6 @@ export async function getSpotifyTracks(query?: string | null) {
     const contacts = await response.json();
     return contacts;
   }
-  return null;
 }
 
 export async function getSimpleTrack(id: string) {
@@ -140,59 +139,59 @@ export async function deleteContact(id: string) {
 [
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b27399581550ef9746ca582bb3cc",
-    "first": "Imagine - Remastered 2010",
+    "name": "Imagine - Remastered 2010",
     "id": "7pKfPomDEeI4TPT6EOYjn9",
-    "last": "Imagine",
-    "twitter": "John Lennon"
+    "album": "Imagine",
+    "artist": "John Lennon"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b2737c8510f493813b5730a6f7ba",
-    "first": "Imagínate",
+    "name": "Imagínate",
     "id": "4zbEItKoaRId1vRZkoO0Uh",
-    "last": "Imagínate",
-    "twitter": "Danny Ocean, Kapo"
+    "album": "Imagínate",
+    "artist": "Danny Ocean, Kapo"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b273fe84759836417d9c41cb9a16",
-    "first": "Imagine",
+    "name": "Imagine",
     "id": "1jYx1g0BXEqvr9bpZoDMS7",
-    "last": "Imagine - Remembering Lennon 40th Anniversary",
-    "twitter": "John Lennon Experience"
+    "album": "Imagine - Remembering Lennon 40th Anniversary",
+    "artist": "John Lennon Experience"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b2737eeb115b73e2e6abc3c66d59",
-    "first": "Eyes Closed",
+    "name": "Eyes Closed",
     "id": "7xDd7gl6AGgpiOz5trz4dM",
-    "last": "LOOM",
-    "twitter": "Imagine Dragons"
+    "album": "LOOM",
+    "artist": "Imagine Dragons"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b2735675e83f707f1d7271e5cf8a",
-    "first": "Believer",
+    "name": "Believer",
     "id": "0pqnGHJpmpxLKifKRmU6WP",
-    "last": "Evolve",
-    "twitter": "Imagine Dragons"
+    "album": "Evolve",
+    "artist": "Imagine Dragons"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
-    "first": "Demons",
+    "name": "Demons",
     "id": "5qaEfEh1AtSdrdrByCP7qR",
-    "last": "Night Visions",
-    "twitter": "Imagine Dragons"
+    "album": "Night Visions",
+    "artist": "Imagine Dragons"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b273da6f73a25f4c79d0e6b4a8bd",
-    "first": "Natural",
+    "name": "Natural",
     "id": "2FY7b99s15jUprqC0M5NCT",
-    "last": "Origins (Deluxe)",
-    "twitter": "Imagine Dragons"
+    "album": "Origins (Deluxe)",
+    "artist": "Imagine Dragons"
   },
   {
     "avatar": "https://i.scdn.co/image/ab67616d0000b273213394bc8b490e9d31feb662",
-    "first": "Imagine",
+    "name": "Imagine",
     "id": "6IcsbETuviVu6UTiBTcxY4",
-    "last": "Imagine",
-    "twitter": "Carbonne"
+    "album": "Imagine",
+    "artist": "Carbonne"
   }
 ].forEach((contact) => {
   fakeContacts.create({
