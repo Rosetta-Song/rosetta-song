@@ -82,7 +82,7 @@ export default function Contact() {
                   name="model"
                   className="w-full p-2 border border-gray-300 rounded-md"
                 >
-                  <option value="synthesia">Rosseta 4</option>
+                  <option value="rosseta">Rosseta 4</option>
                   <option value="synthesia">Synthesia</option>
                   <option value="hailuo">Hailuo</option>
                   <option value="alibaba-qwen">Alibaba Qwen</option>
