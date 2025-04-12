@@ -158,6 +158,7 @@ export default function Contact() {
                 className="w-full p-2 border border-gray-300 rounded-md"
               >
                 <option value="realistic">Lyrics</option>
+                <option value="realistic">Lip sync</option>
                 <option value="realistic">Realistic</option>
                 <option value="cartoon">Cartoon</option>
                 <option value="anime">Anime</option>
