@@ -87,6 +87,7 @@ export default function Contact() {
                   <option value="hailuo">Hailuo</option>
                   <option value="alibaba-qwen">Alibaba Qwen</option>
                   <option value="kling">Kling</option>
+                  <option value="kling">Camb</option>
                   <option value="runway">Runway</option>
                   <option value="google-veo">Google Veo</option>
                   <option value="openai-sora">OpenAI Sor</option>
