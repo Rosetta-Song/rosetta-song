@@ -9,10 +9,10 @@ import invariant from "tiny-invariant";
 
 type ContactMutation = {
   id?: string;
-  first?: string;
-  last?: string;
+  name?: string; // first 
+  album?: string; // last
   avatar?: string;
-  twitter?: string;
+  artist?: string; // twitter
   notes?: string;
   favorite?: boolean;
 };
@@ -31,7 +31,7 @@ const fakeContacts = {
   async getAll(): Promise<ContactRecord[]> {
     return Object.keys(fakeContacts.records)
       .map((key) => fakeContacts.records[key])
-      .sort(sortBy("-createdAt", "last"));
+      .sort(sortBy("-createdAt", "album"));
   },
 
   async get(id: string): Promise<ContactRecord | null> {
@@ -62,15 +62,117 @@ const fakeContacts = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // Handful of helper functions to be called from route loaders and actions
+
+const famousSingers = [
+  "Taylor Swift",
+  "Beyoncé",
+  "Ed Sheeran",
+  "Adele",
+  "Justin Bieber",
+  "Ariana Grande",
+  "Drake",
+  "Billie Eilish",
+  "The Weeknd",
+  "Rihanna",
+  "Bruno Mars",
+  "Lady Gaga",
+  "Katy Perry",
+  "Shakira",
+  "Elton John",
+  "Celine Dion",
+  "Michael Jackson",
+  "Whitney Houston",
+  "Madonna",
+  "Elvis Presley",
+  "Frank Sinatra",
+  "Freddie Mercury",
+  "John Lennon",
+  "Paul McCartney",
+  "Bob Dylan",
+  "Eminem",
+  "Kanye West",
+  "Jay-Z",
+  "Dua Lipa",
+  "Harry Styles",
+  "Sam Smith",
+  "Selena Gomez",
+  "Shawn Mendes",
+  "Camila Cabello",
+  "Jennifer Lopez",
+  "Christina Aguilera",
+  "Mariah Carey",
+  "Post Malone",
+  "Olivia Rodrigo",
+  "Doja Cat",
+  "Bad Bunny",
+  "Karol G",
+  "Maluma",
+  "J Balvin",
+  "Rosalía",
+  "Taylor Swift",
+  "Lana Del Rey",
+  "Sia",
+  "Pitbull",
+  "Enrique Iglesias",
+  "Andrea Bocelli",
+];
+
+function getRandomArtist(): string {
+  const randomIndex = Math.floor(Math.random() * famousSingers.length);
+  return famousSingers[randomIndex];
+}
+
+
+
 export async function getContacts(query?: string | null) {
   await new Promise((resolve) => setTimeout(resolve, 500));
   let contacts = await fakeContacts.getAll();
   if (query) {
     contacts = matchSorter(contacts, query, {
-      keys: ["first", "last"],
+      keys: ["name", "album"],
     });
   }
-  return contacts.sort(sortBy("last", "createdAt"));
+  return contacts.sort(sortBy("album", "createdAt"));
+}
+
+export async function getSpotifyTracks(query?: string | null) {
+  
+  if (query) {
+    console.log(`Fetching from: http://localhost:8084/simple_search?query=${encodeURIComponent(query)}`);
+    const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent(query)}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);
+    }
+  
+    const contacts = await response.json();
+    return contacts;
+  }else {
+    const randomArtist = getRandomArtist()
+    const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent(randomArtist)}`);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);
+    }
+  
+    const contacts = await response.json();
+    return contacts;
+  }
+}
+
+export async function getSimpleTrack(id: string) {
+  if (!id) {
+    throw new Error("Track ID is required");
+  }
+
+  const response = await fetch(`http://127.0.0.1:8084/getSimpleTrack?id=${encodeURIComponent(id)}`);
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch track details: ${response.statusText}`);
+  }
+
+  const track = await response.json();
+  return track;
 }
 
 export async function createEmptyContact() {
@@ -95,222 +197,68 @@ export async function deleteContact(id: string) {
   fakeContacts.destroy(id);
 }
 
+
+
 [
   {
-    avatar:
-      "https://sessionize.com/image/124e-400o400o2-wHVdAuNaxi8KJrgtN3ZKci.jpg",
-    first: "Shruti",
-    last: "Kapoor",
-    twitter: "@shrutikapoor08",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b27399581550ef9746ca582bb3cc",
+    "name": "Imagine - Remastered 2010",
+    "id": "7pKfPomDEeI4TPT6EOYjn9",
+    "album": "Imagine",
+    "artist": "John Lennon"
   },
   {
-    avatar:
-      "https://sessionize.com/image/1940-400o400o2-Enh9dnYmrLYhJSTTPSw3MH.jpg",
-    first: "Glenn",
-    last: "Reyes",
-    twitter: "@glnnrys",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b2737c8510f493813b5730a6f7ba",
+    "name": "Imagínate",
+    "id": "4zbEItKoaRId1vRZkoO0Uh",
+    "album": "Imagínate",
+    "artist": "Danny Ocean, Kapo"
   },
   {
-    avatar:
-      "https://sessionize.com/image/9273-400o400o2-3tyrUE3HjsCHJLU5aUJCja.jpg",
-    first: "Ryan",
-    last: "Florence",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273fe84759836417d9c41cb9a16",
+    "name": "Imagine",
+    "id": "1jYx1g0BXEqvr9bpZoDMS7",
+    "album": "Imagine - Remembering Lennon 40th Anniversary",
+    "artist": "John Lennon Experience"
   },
   {
-    avatar:
-      "https://sessionize.com/image/d14d-400o400o2-pyB229HyFPCnUcZhHf3kWS.png",
-    first: "Oscar",
-    last: "Newman",
-    twitter: "@__oscarnewman",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b2737eeb115b73e2e6abc3c66d59",
+    "name": "Eyes Closed",
+    "id": "7xDd7gl6AGgpiOz5trz4dM",
+    "album": "LOOM",
+    "artist": "Imagine Dragons"
   },
   {
-    avatar:
-      "https://sessionize.com/image/fd45-400o400o2-fw91uCdGU9hFP334dnyVCr.jpg",
-    first: "Michael",
-    last: "Jackson",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b2735675e83f707f1d7271e5cf8a",
+    "name": "Believer",
+    "id": "0pqnGHJpmpxLKifKRmU6WP",
+    "album": "Evolve",
+    "artist": "Imagine Dragons"
   },
   {
-    avatar:
-      "https://sessionize.com/image/b07e-400o400o2-KgNRF3S9sD5ZR4UsG7hG4g.jpg",
-    first: "Christopher",
-    last: "Chedeau",
-    twitter: "@Vjeux",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273407bd04707c463bbb3410737",
+    "name": "Demons",
+    "id": "5qaEfEh1AtSdrdrByCP7qR",
+    "album": "Night Visions",
+    "artist": "Imagine Dragons"
   },
   {
-    avatar:
-      "https://sessionize.com/image/262f-400o400o2-UBPQueK3fayaCmsyUc1Ljf.jpg",
-    first: "Cameron",
-    last: "Matheson",
-    twitter: "@cmatheson",
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273da6f73a25f4c79d0e6b4a8bd",
+    "name": "Natural",
+    "id": "2FY7b99s15jUprqC0M5NCT",
+    "album": "Origins (Deluxe)",
+    "artist": "Imagine Dragons"
   },
   {
-    avatar:
-      "https://sessionize.com/image/820b-400o400o2-Ja1KDrBAu5NzYTPLSC3GW8.jpg",
-    first: "Brooks",
-    last: "Lybrand",
-    twitter: "@BrooksLybrand",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/df38-400o400o2-JwbChVUj6V7DwZMc9vJEHc.jpg",
-    first: "Alex",
-    last: "Anderson",
-    twitter: "@ralex1993",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/5578-400o400o2-BMT43t5kd2U1XstaNnM6Ax.jpg",
-    first: "Kent C.",
-    last: "Dodds",
-    twitter: "@kentcdodds",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/c9d5-400o400o2-Sri5qnQmscaJXVB8m3VBgf.jpg",
-    first: "Nevi",
-    last: "Shah",
-    twitter: "@nevikashah",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/2694-400o400o2-MYYTsnszbLKTzyqJV17w2q.png",
-    first: "Andrew",
-    last: "Petersen",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/907a-400o400o2-9TM2CCmvrw6ttmJiTw4Lz8.jpg",
-    first: "Scott",
-    last: "Smerchek",
-    twitter: "@smerchek",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/08be-400o400o2-WtYGFFR1ZUJHL9tKyVBNPV.jpg",
-    first: "Giovanni",
-    last: "Benussi",
-    twitter: "@giovannibenussi",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/f814-400o400o2-n2ua5nM9qwZA2hiGdr1T7N.jpg",
-    first: "Igor",
-    last: "Minar",
-    twitter: "@IgorMinar",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/fb82-400o400o2-LbvwhTVMrYLDdN3z4iEFMp.jpeg",
-    first: "Brandon",
-    last: "Kish",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/fcda-400o400o2-XiYRtKK5Dvng5AeyC8PiUA.png",
-    first: "Arisa",
-    last: "Fukuzaki",
-    twitter: "@arisa_dev",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/c8c3-400o400o2-PR5UsgApAVEADZRixV4H8e.jpeg",
-    first: "Alexandra",
-    last: "Spalato",
-    twitter: "@alexadark",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/7594-400o400o2-hWtdCjbdFdLgE2vEXBJtyo.jpg",
-    first: "Cat",
-    last: "Johnson",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/5636-400o400o2-TWgi8vELMFoB3hB9uPw62d.jpg",
-    first: "Ashley",
-    last: "Narcisse",
-    twitter: "@_darkfadr",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/6aeb-400o400o2-Q5tAiuzKGgzSje9ZsK3Yu5.JPG",
-    first: "Edmund",
-    last: "Hung",
-    twitter: "@_edmundhung",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/30f1-400o400o2-wJBdJ6sFayjKmJycYKoHSe.jpg",
-    first: "Clifford",
-    last: "Fajardo",
-    twitter: "@cliffordfajard0",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/6faa-400o400o2-amseBRDkdg7wSK5tjsFDiG.jpg",
-    first: "Erick",
-    last: "Tamayo",
-    twitter: "@ericktamayo",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/feba-400o400o2-R4GE7eqegJNFf3cQ567obs.jpg",
-    first: "Paul",
-    last: "Bratslavsky",
-    twitter: "@codingthirty",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/c315-400o400o2-spjM5A6VVfVNnQsuwvX3DY.jpg",
-    first: "Pedro",
-    last: "Cattori",
-    twitter: "@pcattori",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/eec1-400o400o2-HkvWKLFqecmFxLwqR9KMRw.jpg",
-    first: "Andre",
-    last: "Landgraf",
-    twitter: "@AndreLandgraf94",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/c73a-400o400o2-4MTaTq6ftC15hqwtqUJmTC.jpg",
-    first: "Monica",
-    last: "Powell",
-    twitter: "@indigitalcolor",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/cef7-400o400o2-KBZUydbjfkfGACQmjbHEvX.jpeg",
-    first: "Brian",
-    last: "Lee",
-    twitter: "@brian_dlee",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/f83b-400o400o2-Pyw3chmeHMxGsNoj3nQmWU.jpg",
-    first: "Sean",
-    last: "McQuaid",
-    twitter: "@SeanMcQuaidCode",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/a9fc-400o400o2-JHBnWZRoxp7QX74Hdac7AZ.jpg",
-    first: "Shane",
-    last: "Walker",
-    twitter: "@swalker326",
-  },
-  {
-    avatar:
-      "https://sessionize.com/image/6644-400o400o2-aHnGHb5Pdu3D32MbfrnQbj.jpg",
-    first: "Jon",
-    last: "Jensen",
-    twitter: "@jenseng",
-  },
+    "avatar": "https://i.scdn.co/image/ab67616d0000b273213394bc8b490e9d31feb662",
+    "name": "Imagine",
+    "id": "6IcsbETuviVu6UTiBTcxY4",
+    "album": "Imagine",
+    "artist": "Carbonne"
+  }
 ].forEach((contact) => {
   fakeContacts.create({
     ...contact,
-    id: `${contact.first.toLowerCase()}-${contact.last.toLocaleLowerCase()}`,
+    id: `${contact.id}`,
   });
 });

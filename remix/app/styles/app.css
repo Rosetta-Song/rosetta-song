@@ -1,3 +1,6 @@
+@import "tailwindcss";
+
+
 html {
   box-sizing: border-box;
 }
@@ -68,16 +71,16 @@ button:active {
 }
 #contact h1 form button {
   box-shadow: none;
-  font-size: 1.5rem;
+  font-size: 2.5rem;
   font-weight: 400;
   padding: 0;
 }
 #contact h1 form button[value="true"] {
-  color: #a4a4a4;
+  color:#eeb004;
 }
 #contact h1 form button[value="true"]:hover,
 #contact h1 form button[value="false"] {
-  color: #eeb004;
+  color: #f7f;
 }
 
 form[action$="destroy"] button {
@@ -101,26 +104,28 @@ body {
   height: 100%;
   width: 100%;
 }
+#top-bar{
+  background-color: #f7f;
+}
 
 #sidebar {
-  width: 22rem;
+  /* Default display is none; overridden dynamically */
+  display: none;
+  width: 24rem;
   background-color: #f7f7f7;
   border-right: solid 1px #e3e3e3;
-  display: flex;
   flex-direction: column;
 }
 
-
 #index {
   width: 100%;
-  background-color: #f7f7f7;
+  background-color: #f7f;
   border-right: solid 1px #e3e3e3;
   display: flex;
   height: 204px;
   justify-content: flex-start;
   align-items: center;
 }
-
 
 #index > div form {
   position: relative;
@@ -130,12 +135,23 @@ body {
   box-sizing: border-box;
   width: 330%;
   padding-left: 2rem;
+  width: 100%; /* Full width for mobile */
+  max-width: 720px; /* Limit width on larger screens */
+  font-size: 1rem; /* Increase font size for readability */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: 0.625rem 0.75rem;
   background-size: 1rem;
-  position: relative;
   margin-left: 20px;
+  border: 1px solid #ccc; /* Add border for better visibility */
+  border-radius: 0.5rem; /* Rounded corners */
+}
+
+@media (max-width: 768px) {
+  #index > div form input[type="search"] {
+    font-size: 0.875rem; /* Adjust font size for smaller screens */
+    padding: 0.5rem; /* Adjust padding for smaller screens */
+  }
 }
 
 #index > div form input[type="search"].loading {
@@ -176,15 +192,14 @@ body {
   text-decoration: none;
 }
 
-
 #sidebar h1::before {
- 
   margin-right: 0.5rem;
   position: relative;
   top: 1px;
 }
 
 #sidebar > div {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
   padding-top: 1rem;
@@ -236,13 +251,7 @@ body {
   padding-top: 1rem;
 }
 
-#sidebar nav a span {
-  float: right;
-  color: #eeb004;
-}
-#sidebar nav a.active span {
-  color: inherit;
-}
+
 
 i {
   color: #818181;
@@ -264,7 +273,6 @@ i {
 #sidebar nav a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   overflow: hidden;
 
   white-space: pre;
@@ -315,12 +323,12 @@ i {
 }
 
 #contact {
-  max-width: 40rem;
-  display: flex;
+  max-width: 65rem;
+  display: ruby;
 }
 
 #contact h1 {
-  font-size: 2rem;
+  font-size: 3.5rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
@@ -434,7 +442,6 @@ i {
 #index-page:before {
   display: block;
   margin-bottom: 0.5rem;
-
 }
 
 #error-page {
@@ -445,17 +452,27 @@ i {
   width: 100%;
 }
 
-#logo-side-dark{
+#logo-side-dark {
   background-image: url("/app/logo-side-dark.png");
-  width: 204px; /* Set the width */
+  width: 280px; /* Set the width */
   height: 204px;
   align-content: center;
-   /* Set the background image */
-   background-size: cover; /* Ensure the image covers the entire container */
-   background-position: center; /* Center the image */
-   background-repeat: no-repeat; /* Prevent the image from repeating */
+  /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
 }
 
+#logo-side-dark-topbar {
+  background-image: url("/app/logo-side-dark.png");
+  width: 306px; /* Set the width */
+  height: 143px;
+  align-content: center;
+  /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+}
 
 #logo {
   font-family: 'Inter', sans-serif;
@@ -477,4 +494,154 @@ i {
   display: inline-block; /* Ensure it behaves like an inline element */
 }
 
+#logo-image-index {
+  width: 165px; /* Set the width */
+  height: 165px; /* Set the height */
+  background-image: url("/app/logo.png"); /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  display: inline-block; /* Ensure it behaves like an inline element */
+}
+
+#logo-image-index-topbar {
+  width: 116px; /* Set the width */
+  height: 116px; /* Set the height */
+  background-image: url("/app/logo.png"); /* Set the background image */
+  background-size: cover; /* Ensure the image covers the entire container */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  display: inline-block; /* Ensure it behaves like an inline element */
+}
+
+
+#results h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  margin: 0;
+
+  border-bottom: 1px solid #e3e3e3;
+  line-height: 1;
+}
+
+#results h1 > a {
+  text-decoration: none;
+}
+
+#results h1 > a:hover {
+  text-decoration: none;
+}
+
+#results h1::before {
+  margin-right: 0.5rem;
+  position: relative;
+  top: 1px;
+}
+
+#results > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e3e3e3;
+}
+
+#results > div form {
+  position: relative;
+}
+
+#results > div form input[type="search"] {
+  box-sizing: border-box;
+  width: 100%;
+  padding-left: 2rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='%23999' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0.625rem 0.75rem;
+  background-size: 1rem;
+  position: relative;
+}
+
+#results > div form input[type="search"].loading {
+  background-image: none;
+}
+
+#results {
+  width: 91.6%;
+  background-color: #f7f7f7;
+  border-right: solid 1px #e3e3e3;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding-top: 40px;
+}
+
+
+
+#results nav .active i {
+  color: inherit;
+}
+
+#results ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#results li {
+  margin: 0.25rem 0;
+}
+
+#results nav a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+
+  white-space: pre;
+  padding: 0.5rem;
+  border-radius: 8px;
+  color: inherit;
+  text-decoration: none;
+  gap: 1rem;
+  transition: background-color 100ms;
+}
+
+#results nav a:hover {
+  background: #e3e3e3;
+}
+
+#results nav a.active {
+  background: hsl(224, 98%, 58%);
+  color: white;
+}
+
+#results > * {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+#results h1 > a {
+  text-decoration: none;
+}
+
+#results h1 > a:hover {
+  text-decoration: none;
+}
+
+#results nav a.pending {
+  animation: progress 2s infinite ease-in-out;
+  animation-delay: 200ms;
+}
+
+#prompt{
+  position: relative;
+  width: 100%;
+}
+
+#action-button{
+  height: 3em;
+}
 

@@ -5,26 +5,21 @@ import invariant from "tiny-invariant";
 
 import { getContact, updateContact } from "../data";
 
-export const action = async ({
-  params,
-  request,
-}: ActionFunctionArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
+  invariant(params.contactId, "Missing contactId param");
+  const contact = await getContact(params.contactId);
+  if (!contact) {
+    throw new Response("Track Not Found", { status: 404 });
+  }
+  return json({ contact });
+};
+
+export const action = async ({ params, request }: ActionFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   await updateContact(params.contactId, updates);
   return redirect(`/contacts/${params.contactId}`);
-};
-
-export const loader = async ({
-  params,
-}: LoaderFunctionArgs) => {
-  invariant(params.contactId, "Missing contactId param");
-  const contact = await getContact(params.contactId);
-  if (!contact) {
-    throw new Response("Not Found", { status: 404 });
-  }
-  return json({ contact });
 };
 
 export default function EditContact() {
@@ -36,24 +31,24 @@ export default function EditContact() {
       <p>
         <span>Name</span>
         <input
-          aria-label="First name"
-          defaultValue={contact.first}
-          name="first"
-          placeholder="First"
+          defaultValue={contact.name}
+          aria-label="Title"
+          name="name"
           type="text"
+          placeholder="Title"
         />
         <input
-          aria-label="Last name"
-          defaultValue={contact.last}
-          name="last"
-          placeholder="Last"
+          aria-label="Album"
+          defaultValue={contact.album}
+          name="Album"
+          placeholder="Album"
           type="text"
         />
       </p>
       <label>
         <span>Twitter</span>
         <input
-          defaultValue={contact.twitter}
+          defaultValue={contact.artist}
           name="twitter"
           placeholder="@jack"
           type="text"
@@ -71,15 +66,11 @@ export default function EditContact() {
       </label>
       <label>
         <span>Notes</span>
-        <textarea
-          defaultValue={contact.notes}
-          name="notes"
-          rows={6}
-        />
+        <textarea defaultValue={contact.notes} name="notes" rows={6} />
       </label>
       <p>
         <button type="submit">Save</button>
-        <button onClick={() => navigate(-1)} type="button">
+        <button type="button" onClick={() => navigate(-1)}>
           Cancel
         </button>
       </p>
