@@ -23,16 +23,15 @@ import { Key, useEffect } from "react";
 
 export const action = async () => {
   const contact = await createEmptyContact();
-  return redirect(`/contacts/${contact.id}/edit`);
+  return redirect(`/tracks/${contact.id}/edit`);
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  console.log("q", q);
-  const contacts = await getSpotifyTracks(q);
-  console.log("tracks", contacts);
-  return json({ contacts, q });
+  const {contacts, query }  = await getSpotifyTracks(q);
+ 
+  return json({ contacts, query });
 };
 
 export const links: LinksFunction = () => [
@@ -40,7 +39,7 @@ export const links: LinksFunction = () => [
 ];
 
 export default function App() {
-  const { contacts = [], q } = useLoaderData<typeof loader>(); // Default to an empty array
+  const { contacts = [], query } = useLoaderData<typeof loader>(); // Default to an empty array
   const navigation = useNavigation();
   const submit = useSubmit();
   const location = useLocation();
@@ -54,9 +53,9 @@ export default function App() {
   useEffect(() => {
     const searchField = document.getElementById("q");
     if (searchField instanceof HTMLInputElement) {
-      searchField.value = q ?? "";
+      searchField.value = query ?? "";
     }
-  }, [q]);
+  }, [query]);
 
   return (
     <html lang="en">
@@ -84,7 +83,7 @@ export default function App() {
               id="search-form"
               role="search"
               onChange={(event) => {
-                const isFirstSearch = q === null;
+                const isFirstSearch = query === null;
                 submit(event.currentTarget, {
                   replace: !isFirstSearch,
                 });
@@ -94,8 +93,8 @@ export default function App() {
                 id="q"
                 aria-label="Search contacts"
                 className={searching ? "loading" : ""}
-                defaultValue={q ?? "Top Hits"}
-                placeholder="Search"
+                defaultValue={query ?? "Top Hits"}
+                placeholder={query ?? "Top Search"}
                 type="search"
                 name="q"
               />
@@ -115,7 +114,7 @@ export default function App() {
                       className={({ isActive, isPending }) =>
                         `flex-1 ${isActive ? "text-blue-500 font-bold" : isPending ? "text-gray-500" : "text-gray-800"}`
                       }
-                      to={`contacts/${contact.id}?q=${q}`}
+                      to={`tracks/${contact.id}?q=${query}`}
                     >
                       {contact.name || contact.album ? (
                         <>

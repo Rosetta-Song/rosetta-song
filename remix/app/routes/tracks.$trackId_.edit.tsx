@@ -6,8 +6,8 @@ import invariant from "tiny-invariant";
 import { getContact, updateContact } from "../data";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
-  invariant(params.contactId, "Missing contactId param");
-  const contact = await getContact(params.contactId);
+  invariant(params.trackId, "Missing trackId param");
+  const contact = await getContact(params.trackId);
   if (!contact) {
     throw new Response("Track Not Found", { status: 404 });
   }
@@ -15,11 +15,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
-  invariant(params.contactId, "Missing contactId param");
+  invariant(params.trackId, "Missing trackId param");
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
-  await updateContact(params.contactId, updates);
-  return redirect(`/contacts/${params.contactId}`);
+  await updateContact(params.trackId, updates);
+  return redirect(`/tracks/${params.trackId}`);
 };
 
 export default function EditContact() {
