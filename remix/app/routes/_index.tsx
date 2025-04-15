@@ -21,20 +21,21 @@ import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEf
 
 export const action = async () => {
   const contact = await createEmptyContact();
-  return redirect(`/contacts/${contact.id}/edit`);
+  return redirect(`/tracks/${contact.id}/edit`);
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const contacts = await getSpotifyTracks(q);
-  return json({ contacts, q });
+  const {contacts, query }  = await getSpotifyTracks(q);
+ 
+  return json({ contacts, query });
 };
 
 
 
 export default function App() {
-  const { contacts, q } = useLoaderData<typeof loader>();
+  const { contacts, query } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
 
@@ -45,9 +46,9 @@ export default function App() {
   useEffect(() => {
     const searchField = document.getElementById("q");
     if (searchField instanceof HTMLInputElement) {
-      searchField.value = q ?? "";
+      searchField.value = query ?? "";
     }
-  }, [q]);
+  }, [query]);
 
   return (
     <html lang="en">
@@ -95,7 +96,7 @@ export default function App() {
               id="index-search-form"
               role="search"
               onChange={(event) => {
-                const isFirstSearch = q === null;
+                const isFirstSearch = query === null;
                 submit(event.currentTarget, {
                   replace: !isFirstSearch,
                 });
@@ -105,8 +106,8 @@ export default function App() {
                 id="q"
                 aria-label="Search contacts"
                 className={`w-full p-4 border rounded ${searching ? "loading" : ""}`}
-                defaultValue={q ?? ""}
-                placeholder="Search your song"
+                defaultValue={ query ?? ""}
+                placeholder={ query ?? "Search your song"}
                 type="search"
                 name="q"
               />
@@ -145,13 +146,14 @@ export default function App() {
                       <div className="columns-3 flex-col items-center p-7 rounded-2xl">
               
                         {contacts.map((contact: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; album: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; artist: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
-                         /*!-- <li className="inline-flex py-4 first:pt-0 last:pb-0" key={contact.id}></li> */
-                              <NavLink
-                                  className={({ isActive, isPending }) =>
-                                  isActive ? "active" : isPending ? "pending" : ""
-                                  }
-                                  to={`contacts/${contact.id}?q=${q ?? ""}`}
-                              >
+                        /*!-- <li className="inline-flex py-4 first:pt-0 last:pb-0" key={contact.id}></li> */
+                        <NavLink
+                            key={contact.id}
+                            className={({ isActive, isPending }) =>
+                            isActive ? "active" : isPending ? "pending" : ""
+                            }
+                            to={`tracks/${contact.id}?q=${query ?? ""}`}
+                        >
                                   {contact.name || contact.album ? (
                                   <>        
                                   

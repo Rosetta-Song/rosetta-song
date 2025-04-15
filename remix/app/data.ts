@@ -20,6 +20,7 @@ type ContactMutation = {
 export type ContactRecord = ContactMutation & {
   id: string;
   createdAt: string;
+  lyrics?: string;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +137,6 @@ export async function getContacts(query?: string | null) {
 }
 
 export async function getSpotifyTracks(query?: string | null) {
-  
   if (query) {
     console.log(`Fetching from: http://localhost:8084/simple_search?query=${encodeURIComponent(query)}`);
     const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent(query)}`);
@@ -144,19 +144,19 @@ export async function getSpotifyTracks(query?: string | null) {
     if (!response.ok) {
       throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);
     }
-  
+
     const contacts = await response.json();
-    return contacts;
-  }else {
-    const randomArtist = getRandomArtist()
+    return { contacts, query }; // Return both contacts and query
+  } else {
+    const randomArtist = getRandomArtist();
     const response = await fetch(`http://127.0.0.1:8084/simple_search?query=${encodeURIComponent(randomArtist)}`);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch Spotify tracks: ${response.statusText}`);
     }
-  
+
     const contacts = await response.json();
-    return contacts;
+    return { contacts, query: randomArtist }; // Return contacts and the random artist as query
   }
 }
 
@@ -173,6 +173,24 @@ export async function getSimpleTrack(id: string) {
 
   const track = await response.json();
   return track;
+}
+
+export async function getLyrics(id: string) {
+  if (!id) {
+    throw new Error("Track ID is required");
+  }
+  const response = await fetch(`http://127.0.0.1:5000/get_lyrics?id=${encodeURIComponent(id)}`);
+
+  if (!response.ok) {
+    console.error(`Failed to fetch lyrics: ${response.statusText}`);
+  }else{
+    const lyrics = await response.json();
+    return lyrics.lyrics || "No lyrics found for this track.";
+  }
+
+  const lyrics = await response.json();
+  return lyrics.lyrics || "No lyrics found for this track.";
+
 }
 
 export async function createEmptyContact() {

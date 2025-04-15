@@ -19,7 +19,7 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
   await updateContact(params.contactId, updates);
-  return redirect(`/contacts/${params.contactId}`);
+  return redirect(`/tracks/${params.contactId}`);
 };
 
 export default function EditContact() {
