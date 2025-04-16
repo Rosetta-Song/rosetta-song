@@ -87,7 +87,7 @@ export default function App() {
       <div className="flex flex-row" id="index">
         <div id="index-logo" className="basis-1/5">
             
-            <div id="logo-side-dark" aria-label="Rosseta Song"></div>
+            <div id="logo-side-dark" aria-label="Rosetta Song"></div>
          
         </div> 
       
