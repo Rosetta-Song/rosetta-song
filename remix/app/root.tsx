@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Form,
@@ -16,7 +16,7 @@ import {
   useLocation,
 } from "@remix-run/react";
 
-import appStylesHref from "./styles/app.css";
+import "./styles/app.css";
 
 import { createEmptyContact, getSpotifyTracks } from "./data";
 import { Key, useEffect } from "react";
@@ -29,14 +29,10 @@ export const action = async () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const {contacts, query }  = await getSpotifyTracks(q);
- 
+  const { contacts, query } = await getSpotifyTracks(q);
+
   return json({ contacts, query });
 };
-
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: appStylesHref },
-];
 
 export default function App() {
   const { contacts = [], query } = useLoaderData<typeof loader>(); // Default to an empty array
@@ -60,6 +56,7 @@ export default function App() {
   return (
     <html lang="en">
       <head>
+        <script src="http://localhost:3000"></script>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
@@ -72,10 +69,7 @@ export default function App() {
         >
           <NavLink id="top-bar" to="/">
             <h1 id="logo">
-            
-               <div id="logo-side-dark-topbar" aria-label="Rosseta Song"></div>
-              
-            
+              <div id="logo-side-dark-topbar" aria-label="Rosseta Song"></div>
             </h1>
           </NavLink>
           <div>
@@ -109,7 +103,6 @@ export default function App() {
               <ul className="contact-list">
                 {contacts.map((contact: { id: Key | null | undefined; name: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; album: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; avatar: string | undefined; twitter: string | number | boolean | ReactElement<any, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | null | undefined; favorite: any; }) => (
                   <li key={contact.id} className="flex space-x-4 p-2 hover:bg-gray-100 rounded-md">
-                
                     <NavLink
                       className={({ isActive, isPending }) =>
                         `flex-1 ${isActive ? "text-blue-500 font-bold" : isPending ? "text-gray-500" : "text-gray-800"}`
@@ -118,18 +111,17 @@ export default function App() {
                     >
                       {contact.name || contact.album ? (
                         <>
-                            {contact.avatar && (
-                              <img
-                                src={contact.avatar}
-                                alt={`${contact.name || "Contact"}'s avatar`}
-                                className="flex-shrink-0  w-24 h-24 object-cover rounded-md"
-                              
-                              />
-                            )}
+                          {contact.avatar && (
+                            <img
+                              src={contact.avatar}
+                              alt={`${contact.name || "Contact"}'s avatar`}
+                              className="flex-shrink-0  w-24 h-24 object-cover rounded-md"
+                            />
+                          )}
                           <div className="grid">
                             <span className="font-medium">{contact.name}</span>
                             <span className="text-sm text-gray-500">{contact.album}</span>
-                          </div>  
+                          </div>
                         </>
                       ) : (
                         <i className="text-gray-500">No Name</i>
