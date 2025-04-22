@@ -185,11 +185,8 @@ export async function getLyrics(id: string) {
     console.error(`Failed to fetch lyrics: ${response.statusText}`);
   }else{
     const lyrics = await response.json();
-    return lyrics.lyrics || "No lyrics found for this track.";
+    return lyrics.lyrics_data || "No lyrics found for this track.";
   }
-
-  const lyrics = await response.json();
-  return lyrics.lyrics || "No lyrics found for this track.";
 
 }
 

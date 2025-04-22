@@ -14,13 +14,23 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!track) {
     throw new Response("Not Found", { status: 404 });
   }
+
   const lyrics = await getLyrics(track.id);
 
-  track.notes = lyrics;
+  // Validate the structure of the lyrics response
+  const lines = lyrics?.lines;
+  if (Array.isArray(lines)) {
+    track.notes = lines
+      .map(({ timeTag, words }) => `${timeTag} - ${words}`)
+      .filter((line) => line.trim() !== "")
+      .join("\n");
+  } else {
+    console.error("Unexpected lyrics format:", lyrics);
+    track.notes = "No lyrics available.";
+  }
+
   return json({ contact: track });
-
 };
-
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   invariant(params.contactId, "Missing contactId param");
