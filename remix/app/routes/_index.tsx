@@ -2,9 +2,6 @@ import type {  LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Form,
-  Links,
-  LiveReload,
-  Meta,
   NavLink,
   Scripts,
   ScrollRestoration,
@@ -14,15 +11,15 @@ import {
   useSubmit,
 } from "@remix-run/react";
 
-
-
 import { createEmptyContact, getSpotifyTracks } from "../data";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
+
 
 export const action = async () => {
   const contact = await createEmptyContact();
   return redirect(`/tracks/${contact.id}/edit`);
 };
+
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
@@ -34,7 +31,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 
 
-export default function App() {
+export default function Index() {
   const { contacts, query } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
@@ -51,14 +48,7 @@ export default function App() {
   }, [query]);
 
   return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body id="index-body">
+<>
   
 
 
@@ -174,7 +164,6 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
       
-      </body>
-    </html>
+      </>
   );
 }

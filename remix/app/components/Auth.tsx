@@ -1,6 +1,7 @@
 // Remix App:
-import { useLocation, useNavigate,  } from "@remix-run/react";
+import { useLocation, useNavigate, } from "@remix-run/react";
 import { createContext, ReactNode, useEffect, useState } from 'react';
+
 
 
 const STATE = 'state';
@@ -9,18 +10,18 @@ const EXPIRES_IN = 'expires_in';
 const EXPIRES_AT = 'expires_at';
 const SCOPE = 'streaming user-read-email user-read-private';
 
-
-
 export const AuthContext = createContext<string | undefined>(undefined);
 
 interface Props {
   children: ReactNode;
+  SPOTIFY_CLIENT_ID: string;
 }
 export const Auth = (props: Props) => {
   const location = useLocation();
   const isIndexPage = location.pathname === "/";
   const router = useNavigate();
   const [token, setToken] = useState('');
+  const { SPOTIFY_CLIENT_ID } = props;
 
   useEffect(() => {
     const cb = async () => {
@@ -39,7 +40,7 @@ export const Auth = (props: Props) => {
         const tokenResponse = await fetch('/api/auth/token');
         const { token: cookieToken }: { token: string } =
           await tokenResponse.json();
-
+        console.log('Token from cookie:', cookieToken);
         // found an auth code flow token
         if (cookieToken) {
           setToken(cookieToken);
@@ -76,26 +77,28 @@ export const Auth = (props: Props) => {
         }
       } catch (err) {
         console.error(err);
+        
       }
     };
     cb();
   }, [router]);
 
   const handleClick = async (flow: 'implicit' | 'code') => {
+   
     let response_type = '';
     let redirect_uri = '';
     
     if (flow === 'implicit') {
       await fetch('/api/auth/deleteCookie');
       response_type = 'token';
-      redirect_uri = 'http://localhost:5173/';
+      redirect_uri = 'http://127.0.0.1:5173/';
     }
 
     if (flow === 'code') {
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(EXPIRES_AT);
       response_type = 'code';
-      redirect_uri = 'http://localhost:5173/api/auth/callback';
+      redirect_uri = 'f2fe-64-226-182-42.ngrok-free.app/api/auth/callback';
     }
 
     // generate random string
@@ -112,20 +115,28 @@ export const Auth = (props: Props) => {
 
     localStorage.setItem(STATE, state);
 
-    if (!process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID) {
+    if (!SPOTIFY_CLIENT_ID) {
       throw new Error('Spotify Client ID is not defined');
     }
 
     const params = new URLSearchParams({
       response_type,
-      client_id: process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID,
+      client_id: SPOTIFY_CLIENT_ID,
       scope: SCOPE,
       redirect_uri,
       state,
     });
 
     const url = `https://accounts.spotify.com/authorize/?${params.toString()}`;
-    router(url);
+    window.location.href = url;
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(EXPIRES_AT);
+    localStorage.removeItem(STATE);
+    setToken('');
+    router('/');
   };
 
   if (!token) {
@@ -142,11 +153,11 @@ export const Auth = (props: Props) => {
             
               <div className="button-container absolute top-2 right-20">
                   <button onClick={() => handleClick('code')} className="transform motion-safe:hover:scale-110 ">
-                   Login
+                   Login code
                 </button>
                 <span className="mx-2" >&nbsp;</span>
                 <button onClick={() => handleClick('implicit')} className="transform hover:scale-110 motion-reduce:transform-none">
-                   Login with Spotify
+                   Login token
                 </button>
            
               </div>
@@ -159,6 +170,11 @@ export const Auth = (props: Props) => {
   }
 
   return (
-    <AuthContext.Provider value={token}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider value={token}>
+      <button onClick={handleLogout} className="absolute top-2 right-2 bg-red-500 text-white px-4 py-2 rounded">
+        Logout
+      </button>
+      {props.children}
+    </AuthContext.Provider>
   );
 };

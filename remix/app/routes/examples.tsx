@@ -5,7 +5,7 @@ export default function ExamplePage() {
   const [bgColor, setBgColor] = useState("white");
   const [labelText, setLabelText] = useState("Original Label");
   const [showLabel, setShowLabel] = useState(true);
-  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState<keyof typeof countries | "">("");
   const [selectedCity, setSelectedCity] = useState("");
   const [result, setResult] = useState("");
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export default function ExamplePage() {
     Canada: ["Toronto", "Vancouver", "Montreal"],
   };
 
-  function addNumbers(a, b) {
+  function addNumbers(a: number, b: number): number {
     return a + b;
   }
 
@@ -23,9 +23,9 @@ export default function ExamplePage() {
     return Math.floor(Math.random() * 100);
   }
 
-  function reverseString(str) {
+function reverseString(str: string): string {
     return str.split("").reverse().join("");
-  }
+}
 
   function shareData() {
     navigate("/shared-data-page?info=" + encodeURIComponent("Shared info from main page"));
@@ -72,11 +72,12 @@ export default function ExamplePage() {
       {showLabel && <p className="text-lg mt-4">{labelText}</p>}
 
       <div className="mt-6">
-        <label className="block">Select Country:</label>
+        <label htmlFor="country-select" className="block">Select Country:</label>
         <select
+          id="country-select"
           value={selectedCountry}
           onChange={(e) => {
-            setSelectedCountry(e.target.value);
+            setSelectedCountry(e.target.value as keyof typeof countries | "");
             setSelectedCity("");
           }}
           className="border rounded p-2"
@@ -89,14 +90,15 @@ export default function ExamplePage() {
 
         {selectedCountry && (
           <div className="mt-2">
-            <label className="block">Select City:</label>
+            <label htmlFor="city-select" className="block">Select City:</label>
             <select
+              id="city-select"
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
               className="border rounded p-2"
             >
               <option value="">-- Select City --</option>
-              {countries[selectedCountry].map((city) => (
+              {selectedCountry && countries[selectedCountry].map((city) => (
                 <option key={city} value={city}>{city}</option>
               ))}
             </select>

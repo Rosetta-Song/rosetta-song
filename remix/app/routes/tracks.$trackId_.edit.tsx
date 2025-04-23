@@ -66,7 +66,7 @@ export default function EditContact() {
       </label>
       <label>
         <span>Notes</span>
-        <textarea defaultValue={contact.notes} name="notes" rows={6} />
+        <textarea defaultValue='prompt' name="notes" rows={6} readOnly />
       </label>
       <p>
         <button type="submit">Save</button>

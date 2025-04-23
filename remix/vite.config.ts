@@ -5,9 +5,10 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
     server: {
-      port: 5173,
+      host: '127.0.0.1',
+      port: 3000,
       allowedHosts: [
-        'be77-64-226-182-42.ngrok-free.app',
+        'f2fe-64-226-182-42.ngrok-free.app',
       ]
     },
   plugins: [

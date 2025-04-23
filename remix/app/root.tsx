@@ -34,11 +34,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const q = url.searchParams.get("q");
   const { contacts, query } = await getSpotifyTracks(q);
 
-  return json({ contacts, query });
+  return json({ contacts, query, SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID });
 };
 
 export default function App() {
   const { contacts = [], query } = useLoaderData<typeof loader>(); // Default to an empty array
+  const { SPOTIFY_CLIENT_ID } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
   const location = useLocation();
@@ -64,7 +65,7 @@ export default function App() {
 
     <html lang="en">
       <head>
-        <script src="http://localhost:3000"></script>
+        
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
@@ -72,7 +73,7 @@ export default function App() {
       </head>
       <body>
         
-        <Auth>
+        <Auth SPOTIFY_CLIENT_ID={SPOTIFY_CLIENT_ID ?? ""}> 
             <AuthContext.Consumer>
               {(token) => {
                 if (!token) {

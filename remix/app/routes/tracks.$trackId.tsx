@@ -92,10 +92,12 @@ export default function Contact() {
             <textarea
               id="prompt"
               name="prompt"
+              defaultValue='Enter your prompt here...'
               value={contact.notes}
               placeholder={contact.notes ? contact.notes : "Enter your prompt here..."}
               className="w-full p-4 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none bg-gradient-to-r from-blue-50 to-purple-50 text-gray-700"
               rows={10}
+              readOnly
             ></textarea>
            
           </div>
