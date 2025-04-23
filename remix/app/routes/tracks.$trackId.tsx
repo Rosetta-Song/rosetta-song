@@ -2,7 +2,7 @@ import { Form, json, useFetcher, useLoaderData } from "@remix-run/react";
 import { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import invariant from "tiny-invariant";
 
-import type { FunctionComponent } from "react";
+import { useEffect, type FunctionComponent } from "react";
 
 import type { ContactRecord } from "../data";
 import { getSimpleTrack, updateContact, getLyrics } from "../data";
@@ -42,9 +42,23 @@ export const action = async ({ params, request }: ActionFunctionArgs) => {
 
 export default function Contact() {
   const { contact } = useLoaderData<typeof loader>();
+    // Add this inside your component or a custom hook
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://sdk.scdn.co/spotify-player.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+
 
   return (
+    
     <div id="contact">
+      
       <div className="absolute top-18 right-20 ...">
         <Form action="edit">
           <button hidden type="submit">Generate AI Video&nbsp;&nbsp;&nbsp;</button>
@@ -90,35 +104,8 @@ export default function Contact() {
           <div>
           <div className="grid grid-cols-5 gap-4">
             <div className="...">   
-              <Form method="post" action="model">
-                <label htmlFor="model">Model: </label>
-                <select
-                  id="model"
-                  name="model"
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                >
-                  <option value="rosseta">Rosetta 4</option>
-                  <option value="synthesia">Synthesia</option>
-                  <option value="hailuo">Hailuo</option>
-                  <option value="alibaba-qwen">Alibaba Qwen</option>
-                  <option value="kling">Kling</option>
-                  <option value="runway">Runway</option>
-                  <option value="google-veo">Google Veo</option>
-                  <option value="openai-sora">OpenAI Sor</option>
-                  <option value="pika">Pika</option>
-                  <option value="luma">Luma</option>
-                  <option value="adobe-firefly">Adobe Firefly</option>
-                  <option value="gpt-4o">GPT-4o</option>
-                  <option value="gemini-25">Gemini-2.5 Pro</option>
-                  <option value="claude-37">Claude 3.7</option>
-                  <option value="llama-3">Llama 3</option>
-                  <option value="deep-sek">Deep Seek</option>
-                </select>
-            </Form>
-            </div>
-            <div className="...">
             <Form method="post" action="language">
-              <label htmlFor="language">Language: </label>
+              <label htmlFor="language">Language origin: </label>
               <select
                 id="language"
                 name="language"
@@ -126,6 +113,53 @@ export default function Contact() {
               >
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="de">German</option>
+                <option value="it">Italian</option>
+                <option value="pt">Portuguese</option>
+                <option value="zh">Chinese</option>
+                <option value="ja">Japanese</option>
+                <option value="ko">Korean</option>
+                <option value="ru">Russian</option>
+                <option value="ar">Arabic</option>
+                <option value="hi">Hindi</option>
+                <option value="bn">Bengali</option>
+                <option value="pa">Punjabi</option>
+                <option value="tr">Turkish</option>
+                <option value="vi">Vietnamese</option>
+                <option value="th">Thai</option>
+                <option value="id">Indonesian</option>
+                <option value="ms">Malay</option>
+                <option value="sw">Swahili</option>
+                <option value="tl">Tagalog</option>
+                <option value="fi">Finnish</option>
+                <option value="no">Norwegian</option>
+                <option value="da">Danish</option>
+                <option value="sv">Swedish</option>
+                <option value="el">Greek</option>
+                <option value="hu">Hungarian</option>
+                <option value="cs">Czech</option>
+                <option value="ro">Romanian</option>
+                <option value="sk">Slovak</option>
+                <option value="bg">Bulgarian</option>
+                <option value="hr">Croatian</option>
+                <option value="sl">Slovenian</option>
+                <option value="lt">Lithuanian</option>
+                <option value="lv">Latvian</option>
+                <option value="et">Estonian</option>
+              </select>
+            </Form>
+            </div>
+            <div className="...">
+            <Form method="post" action="language">
+              <label htmlFor="language">Translate to: </label>
+              <select
+                id="language"
+                name="language"
+                className="w-full p-2 border border-gray-300 rounded-md"
+              >
+                <option value="es">Spanish</option>
+                <option value="en">English</option>
                 <option value="fr">French</option>
                 <option value="de">German</option>
                 <option value="it">Italian</option>
@@ -219,8 +253,9 @@ export default function Contact() {
                   type="submit"
                   className="px-6 py-3 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                 >
-                  Generate AI Video&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Generate Video&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  </button>
+                </div>
                 <div className="absolute bottom-10 right-2 ...">
                     <h1>
                       <Favorite contact={contact} />
@@ -233,7 +268,6 @@ export default function Contact() {
           </div>
          </div>
      
-      </div>
     
   );
 }

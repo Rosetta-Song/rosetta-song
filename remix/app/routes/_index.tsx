@@ -1,4 +1,4 @@
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import type {  LoaderFunctionArgs } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 import {
   Form,
@@ -60,27 +60,7 @@ export default function App() {
       </head>
       <body id="index-body">
   
-        
-        <div className="static">
-            <div className="absolute top-20 left-220">   </div>
-            <div className="button-container absolute top-6 left-18">
-              <a href="./premium" className="text-blue-600 visited:text-purple-600">Premium</a>
-              <span className="mx-2">&nbsp;</span>
-              <a href="./support" className="text-blue-600 visited:text-purple-600">Support</a>
-             </div>
-            <span className="mx-2">&nbsp;</span>
-            
-              <div className="button-container absolute top-2 right-20">
-                  <button className="transform motion-safe:hover:scale-110 ">
-                  Sign up
-                </button>
-                <span className="mx-2">&nbsp;</span>
-                <button className="transform hover:scale-110 motion-reduce:transform-none">
-                  Log In
-                </button>
-              </div>
-            
-         </div>
+
 
       
         
@@ -193,7 +173,7 @@ export default function App() {
    
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
+      
       </body>
     </html>
   );
