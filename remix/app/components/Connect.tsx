@@ -35,7 +35,7 @@ const View = ({ player }: Props) => {
     return (
       <div className={styles.container}>
         <b>
-          Instance not active. Transfer your playback using your Spotify app.
+         Transfer your playback to Rosetta Song using your Spotify app.
         </b>
       </div>
     );

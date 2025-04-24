@@ -99,7 +99,7 @@ export const Auth = (props: Props) => {
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(EXPIRES_AT);
       response_type = 'code';
-      redirect_uri = 'http://127.0.0.1:3000/api/auth/callback';
+      redirect_uri = 'https://6fab-64-226-182-42.ngrok-free.app/api/auth/callback';
     }
 
     // generate random string

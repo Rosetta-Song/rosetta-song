@@ -20,7 +20,7 @@ export const Player = ({ token, children }: Props) => {
 
     window.onSpotifyWebPlaybackSDKReady = () => {
       const p = new window.Spotify.Player({
-        name: 'Web Playback SDK Example',
+        name: 'Rosetta Song Player',
         getOAuthToken: (cb: (arg0: string) => void) => {
           cb(token);
         },

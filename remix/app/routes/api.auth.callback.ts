@@ -12,7 +12,7 @@ export const loader = async ({ request }: { request: Request }) => {
 
   const spotify_client_id = process.env.SPOTIFY_CLIENT_ID;
   const spotify_client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-  const spotify_redirect_uri = 'http://127.0.0.1:3000/api/auth/callback';
+  const spotify_redirect_uri = 'https://6fab-64-226-182-42.ngrok-free.app/api/auth/callback';
 
   const urlToken = 'https://accounts.spotify.com/api/token';
   const authOptions: RequestInit = {
