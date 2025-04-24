@@ -1,7 +1,8 @@
 // Remix App:
 import { useLocation, useNavigate, } from "@remix-run/react";
 import { createContext, ReactNode, useEffect, useState } from 'react';
-
+import { Player } from './Player';
+import { Connect } from './Connect';
 
 
 const STATE = 'state';
@@ -91,14 +92,14 @@ export const Auth = (props: Props) => {
     if (flow === 'implicit') {
       await fetch('/api/auth/deleteCookie');
       response_type = 'token';
-      redirect_uri = 'http://127.0.0.1:5173/';
+      redirect_uri = 'http://127.0.0.1:3000';
     }
 
     if (flow === 'code') {
       localStorage.removeItem(ACCESS_TOKEN);
       localStorage.removeItem(EXPIRES_AT);
       response_type = 'code';
-      redirect_uri = 'f2fe-64-226-182-42.ngrok-free.app/api/auth/callback';
+      redirect_uri = 'http://127.0.0.1:3000/api/auth/callback';
     }
 
     // generate random string
@@ -174,6 +175,9 @@ export const Auth = (props: Props) => {
       <button onClick={handleLogout} className="absolute top-2 right-2 bg-red-500 text-white px-4 py-2 rounded">
         Logout
       </button>
+      <Player token={token}>
+                    <Connect />
+                  </Player>
       {props.children}
     </AuthContext.Provider>
   );

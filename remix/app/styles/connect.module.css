@@ -1,49 +1,62 @@
 .container {
+  position: fixed;
+  top: 6px;
+  left: 46%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 24px;
-  height: 100%;
-  width: 100%;
-  padding-top: 48px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 9999;
+  gap: 12px;
 }
+
 .nowPlayingCover {
+  width: 48px;
+  height: 48px;
   border-radius: 8px;
-  float: left;
-  width: 300px;
-  height: 300px;
-  background: transparent;
+  background-size: cover;
+  background-position: center;
+  background-color: #eee; /* fallback */
+  flex-shrink: 0;
 }
+
 .nowPlayingSide {
-  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  text-align: center;
+  align-items: center;
+  gap: 4px;
 }
+
 .nowPlayingName {
-  font-size: 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
 }
+
 .controlsContainer {
   display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 8px;
 }
+
 .button, .playPause {
-  background-color: #44c767;
-  border-radius: 28px;
-  border: 1px solid #18ab29;
-  display: inline-block;
+  background: none;
+  border: none;
+  color: #333;
+  font-size: 1rem;
+  padding: 6px 12px;
   cursor: pointer;
-  color: #ffffff;
-  font-family: Arial;
-  font-size: 18px;
-  padding: 16px 31px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #2f6627;
+  transition: background 0.2s;
+  border-radius: 6px;
 }
+
+.button:hover, .playPause:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
 .playPause {
-  min-width: 120px;
+  font-weight: bold;
 }

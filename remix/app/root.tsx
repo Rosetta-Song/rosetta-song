@@ -19,8 +19,7 @@ import "./styles/app.css";
 
 import { createEmptyContact, getSpotifyTracks } from "./data";
 import { Key, useEffect } from "react";
-import { Player } from './components/Player';
-import { Connect } from './components/Connect';
+
 import { Loader } from './components/Loader';
 import { Auth, AuthContext } from './components/Auth';
 
@@ -80,11 +79,7 @@ export default function App() {
                   return <Loader />;
                 }
 
-                return (
-                  <Player token={token}>
-                    <Connect />
-                  </Player>
-                );
+                
               }}
             </AuthContext.Consumer>
           </Auth>

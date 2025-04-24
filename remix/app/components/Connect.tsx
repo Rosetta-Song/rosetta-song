@@ -59,7 +59,7 @@ const View = ({ player }: Props) => {
               player.previousTrack();
             }}
           >
-            &lt;&lt;
+            ⏮️
           </button>
 
           <button
@@ -68,7 +68,7 @@ const View = ({ player }: Props) => {
               player.togglePlay();
             }}
           >
-            {isPaused ? 'Play' : 'Pause'}
+            {isPaused ? '▶️' : '⏸️'}
           </button>
 
           <button
@@ -77,7 +77,7 @@ const View = ({ player }: Props) => {
               player.nextTrack();
             }}
           >
-            &gt;&gt;
+            ⏭️
           </button>
         </div>
       </div>

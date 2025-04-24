@@ -8,7 +8,7 @@ export default defineConfig({
       host: '127.0.0.1',
       port: 3000,
       allowedHosts: [
-        'f2fe-64-226-182-42.ngrok-free.app',
+        'http://127.0.0.1:3000',
       ]
     },
   plugins: [
