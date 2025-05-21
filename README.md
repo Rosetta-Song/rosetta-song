@@ -1,5 +1,5 @@
 # Frontend JS Rosetta Song
-This repository contains the frontend JavaScript application for the Rosetta Song project.
+This repository contains the frontend React JavaScript (REMIX) application and Backend on Python for the Rosetta Song project.
 
 ## Environment Variables
 Before running the application, create a .env file in the root directory and populate it with the following variables:
